@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777773414732",
+    "project_id": "is-poi",
+    "storage_bucket": "is-poi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777773414732:android:053164bb6af77a9618b7e9",
+        "android_client_info": {
+          "package_name": "com.example.is_poi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgVmLShnovItN5Ea1wFhiXP_OTujGVB1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
