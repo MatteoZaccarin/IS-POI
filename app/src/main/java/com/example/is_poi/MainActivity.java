@@ -1,14 +1,19 @@
 package com.example.is_poi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.service.autofill.UserData;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.is_poi.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -44,21 +49,40 @@ public class MainActivity extends AppCompatActivity {
     }
     FirebaseAuth auth;
     FirebaseUser user;
+    ActivityMainBinding binding;
     TextView tx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Button button;
-
-        FirebaseUser user;
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding=ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new Search_city());
+        binding.bottomNavigationView.setOnItemSelectedListener(item->{
+            switch(item.getItemId()){
+                case R.id.search_city:
+                    replaceFragment(new Search_city());
+                    break;
+                case R.id.search_poi:
+                    Log.d("test","entra");
+                    replaceFragment(new Search_poi());
+                    break;
+                case R.id.go_to_logout:
+                    Log.d("test","entra");
+                    replaceFragment(new Logout());
+                    break;
+            }
+            return true;
+        });
+
+
+        /*FirebaseUser user;
+
 
 
         TextView textView;
         textView= findViewById((R.id.user_details));
-        /* https://www.veneto.eu/static/opendata/dove-alloggiare.csv*/
-        // https://dati.veneto.it/export/json/Elenco-delle-Strutture-Ricettive-Turistiche-della-Regione-Veneto.json
+
+
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
 
 
@@ -102,6 +126,12 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        */
+    }
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.FrameLayout,fragment);
+        fragmentTransaction.commit();
     }
 }
