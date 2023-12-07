@@ -74,16 +74,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-
-        /*FirebaseUser user;
-
-
-
         TextView textView;
         textView= findViewById((R.id.user_details));
 
 
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+        /*OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
 
 
         Retrofit retrofit= new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
@@ -104,29 +99,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+        */
         auth=FirebaseAuth.getInstance();
-        button=findViewById(R.id.logout);
-        textView=findViewById(R.id.user_details);
         user= auth.getCurrentUser();
         if (user==null){
             Intent intent= new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
             finish();
         }else{
-            textView.setText(user.getEmail());
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent= new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        */
     }
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager=getSupportFragmentManager();

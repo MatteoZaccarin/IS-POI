@@ -3,6 +3,8 @@ package com.example.is_poi;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -64,25 +66,37 @@ public class Logout extends Fragment {
         return fragment;
     }
 
-    FirebaseAuth auth;
-    FirebaseUser user;
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Button button;
         super.onCreate(savedInstanceState);
-        TextView textView;
-        textView=(TextView) getView().findViewById(R.id.user_details);
 
 
-        //OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
 
 
-        //Retrofit retrofit= new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+    }
 
-        //MainActivity.RequestUser ru= retrofit.create(MainActivity.RequestUser.class);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_logout, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Button button=view.findViewById(R.id.logout);
+
+        TextView textView=view.findViewById(R.id.user_details);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+
+
+        Retrofit retrofit= new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+
+        MainActivity.RequestUser ru= retrofit.create(MainActivity.RequestUser.class);
 
         TextView finalTextView = textView;
-        /*
+
         ru.getUser().enqueue(new retrofit2.Callback<ArrayList<Alberghi>>() {
 
             @Override
@@ -95,20 +109,6 @@ public class Logout extends Fragment {
                 finalTextView.setText(t.getMessage());
             }
         });
-
-
-        */
-        auth= FirebaseAuth.getInstance();
-        button=getView().findViewById(R.id.logout);
-        textView=(TextView)getView().findViewById(R.id.user_details);
-        user= auth.getCurrentUser();
-        if (user==null){
-            Intent intent= new Intent(getActivity(), Login.class);
-            startActivity(intent);
-        }else{
-            textView.setText(user.getEmail());
-        }
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,12 +117,5 @@ public class Logout extends Fragment {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logout, container, false);
     }
 }
