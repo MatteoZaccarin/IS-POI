@@ -43,14 +43,17 @@ import retrofit2.http.Path;
 
 
 public class MainActivity extends AppCompatActivity {
-    interface RequestUser{
+    interface RequestAlberghi{
         @GET("/export/json/Elenco-delle-Strutture-Ricettive-Turistiche-della-Regione-Veneto.json")
-        Call<ArrayList<Alberghi>> getUser();
+        Call<ArrayList<Alberghi>> getAlberghi();
+    }
+    interface RequestComuni{
+        @GET("/export/json/SUPERFICIE-TERRITORIALE-IN-KMQ-COMUNI-DEL-VENETO.json")
+        Call<ArrayList<Comuni>> getComuni();
     }
     FirebaseAuth auth;
     FirebaseUser user;
     ActivityMainBinding binding;
-    TextView tx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,32 +77,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        TextView textView;
-        textView= findViewById((R.id.user_details));
-
-
-        /*OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
-
-
-        Retrofit retrofit= new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
-
-        RequestUser ru= retrofit.create(RequestUser.class);
-
-        TextView finalTextView = textView;
-        ru.getUser().enqueue(new Callback<ArrayList<Alberghi>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Alberghi>> call, Response<ArrayList<Alberghi>> response) {
-                finalTextView.setText(response.body().get(12).COMUNE);
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Alberghi>> call, Throwable t) {
-                finalTextView.setText(t.getMessage());
-            }
-        });
-
-
-        */
         auth=FirebaseAuth.getInstance();
         user= auth.getCurrentUser();
         if (user==null){

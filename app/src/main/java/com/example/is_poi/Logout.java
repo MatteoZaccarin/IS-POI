@@ -93,11 +93,11 @@ public class Logout extends Fragment {
 
         Retrofit retrofit= new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
 
-        MainActivity.RequestUser ru= retrofit.create(MainActivity.RequestUser.class);
+        MainActivity.RequestAlberghi ru= retrofit.create(MainActivity.RequestAlberghi.class);
 
         TextView finalTextView = textView;
 
-        ru.getUser().enqueue(new retrofit2.Callback<ArrayList<Alberghi>>() {
+        ru.getAlberghi().enqueue(new retrofit2.Callback<ArrayList<Alberghi>>() {
 
             @Override
             public void onResponse(Call<ArrayList<Alberghi>> call, Response<ArrayList<Alberghi>> response) {

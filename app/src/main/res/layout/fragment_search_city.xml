@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".search_city">
+    tools:context=".Search_city">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="city fragment"
-        android:layout_gravity="center"/>
-
+        android:hint="Nome comune"
+        android:layout_gravity="center"
+        android:textAlignment="center"/>
 </FrameLayout>
