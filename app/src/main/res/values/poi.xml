@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="poi">IS-POI</string>
+    <string-array name="poi_type">
+        <item>Pista da Scii</item>
+        <item>Sentiero</item>
+        <item>Pista ciclabile</item>
+        <item>Alberghi</item>
+        <item>Sentieri enogastronomici</item>
+    </string-array>
+</resources>
