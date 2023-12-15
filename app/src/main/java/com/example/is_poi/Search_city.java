@@ -25,11 +25,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Search_city#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Search_city extends Fragment {
 
     @Override

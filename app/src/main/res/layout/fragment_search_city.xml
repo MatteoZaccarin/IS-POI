@@ -12,4 +12,13 @@
         android:hint="Nome comune"
         android:layout_gravity="center"
         android:textAlignment="center"/>
+
+    <Button
+        android:id="@+id/Cerca_comune"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cerca"
+        android:textSize="18dp"
+        android:layout_gravity="bottom"/>
+
 </FrameLayout>
