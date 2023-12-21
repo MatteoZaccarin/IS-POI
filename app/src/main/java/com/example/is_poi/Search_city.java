@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -56,6 +57,7 @@ public class Search_city extends Fragment {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
         Retrofit retrofit= new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
         MainActivity.RequestComuni ru= retrofit.create(MainActivity.RequestComuni.class);
+
         ru.getComuni().enqueue(new retrofit2.Callback<ArrayList<Comuni>>() {
             @Override
             public void onResponse(Call<ArrayList<Comuni>> call, Response<ArrayList<Comuni>> response) {
@@ -94,5 +96,6 @@ public class Search_city extends Fragment {
                 return;
             }
         });
+
     }
 }
