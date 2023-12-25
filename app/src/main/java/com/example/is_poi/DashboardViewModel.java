@@ -6,16 +6,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -26,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardViewModel extends ViewModel {
     private final MutableLiveData<DashboardUiState> uiState =
-            new MutableLiveData<>(new DashboardUiState(null));
+        new MutableLiveData<>(new DashboardUiState(null));
     public LiveData<DashboardUiState> getUiState() {
         return uiState;
     }
@@ -39,8 +35,8 @@ public class DashboardViewModel extends ViewModel {
         request.getAlberghi().enqueue(new retrofit2.Callback<ArrayList<Alberghi>>() {
             @Override
             public void onResponse(
-                    @NonNull Call<ArrayList<Alberghi>> call,
-                    @NonNull Response<ArrayList<Alberghi>> response
+                @NonNull Call<ArrayList<Alberghi>> call,
+                @NonNull Response<ArrayList<Alberghi>> response
             ) {
                 List<String> mapList = new ArrayList<>();
                 if (response.body() != null) {
@@ -54,8 +50,8 @@ public class DashboardViewModel extends ViewModel {
             }
             @Override
             public void onFailure(
-                    @NonNull Call<ArrayList<Alberghi>> call,
-                    @NonNull Throwable throwable
+                @NonNull Call<ArrayList<Alberghi>> call,
+                @NonNull Throwable throwable
             ) {
                 return;
             }
