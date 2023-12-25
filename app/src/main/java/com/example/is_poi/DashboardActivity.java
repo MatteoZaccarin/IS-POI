@@ -26,55 +26,43 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardActivity extends AppCompatActivity {
     private ActivityDashboardBinding binding;
-    private DashboardViewModel viewmodel;
+    private DashboardViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_dashboard);
-        binding=ActivityDashboardBinding.inflate(getLayoutInflater());
+        binding = ActivityDashboardBinding.inflate(getLayoutInflater());
+        viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         setContentView(binding.getRoot());
 
-        viewmodel=new ViewModelProvider(this).get(DashboardViewModel.class);
+        viewModel.fetchMunicipallyData();
 
-        binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.drawer.openDrawer(GravityCompat.START);
-            }
-        });
-        binding.leftMenu.textView2.setText("ciao pippo");
+        manageViews();
+        initObservers();
+    }
 
-        viewmodel.fetchdata();
-        viewmodel.nomiComuni().observe(this, list -> {
-            if(list!=null){
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(binding.getRoot().getContext(), android.R.layout.simple_dropdown_item_1line,list);
+    private void initObservers() {
+        viewModel.getUiState().observe(this, uiState -> {
+            if (uiState.municipalities != null) {
+                // Update adapter
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        binding.getRoot().getContext(),
+                        android.R.layout.simple_dropdown_item_1line,
+                        uiState.municipalities
+                );
                 binding.autoCompleteTextView.setAdapter(adapter);
             }
         });
+    }
 
-        //butta dentro
-        binding.CercaComune.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Boolean find=false;
-                for (String comune:nomiComuni) {
-                    if (comune.equals(binding.autoCompleteTextView.getText().toString())){
-                        find = true;
-                        break;
-                    } else
-                        Log.d(comune, binding.autoCompleteTextView.getText().toString());
-                }
-                if(find){
-                    //replaceFragment(new City_risultati());
-                }
-                else{
-                    Toast errorToast = Toast.makeText(binding.getRoot().getContext(), "Inserisci un comune presente in Veneto, selezionalo dai consigli automatici!", Toast.LENGTH_SHORT);
-                    errorToast.show();
-                }
-
-            }
+    private void manageViews() {
+        binding.toolbar.setNavigationOnClickListener(view ->
+                binding.drawer.openDrawer(GravityCompat.START)
+        );
+        binding.autoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
+            String selected = (String) adapterView.getItemAtPosition(i);
+            Toast newToast = Toast.makeText(binding.getRoot().getContext(), "Cliccato " + selected, Toast.LENGTH_SHORT);
+            newToast.show();
         });
-
-
     }
 }
