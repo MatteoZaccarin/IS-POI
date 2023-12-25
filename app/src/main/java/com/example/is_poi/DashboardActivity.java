@@ -12,7 +12,20 @@ import android.widget.Toast;
 
 import com.example.is_poi.databinding.ActivityDashboardBinding;
 
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+
 public class DashboardActivity extends AppCompatActivity {
+    interface RequestAlberghi{
+        @GET("/export/json/Elenco-delle-Strutture-Ricettive-Turistiche-della-Regione-Veneto.json")
+        Call<ArrayList<Alberghi>> getAlberghi();
+    }
+    interface RequestComuni{
+        @GET("/export/json/SUPERFICIE-TERRITORIALE-IN-KMQ-COMUNI-DEL-VENETO.json")
+        Call<ArrayList<Comuni>> getComuni();
+    }
     private ActivityDashboardBinding binding;
     private DashboardViewModel viewModel;
 

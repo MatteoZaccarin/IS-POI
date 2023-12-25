@@ -30,7 +30,7 @@ public class DashboardViewModel extends ViewModel {
     public void fetchMunicipallyData() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
-        MainActivity.RequestAlberghi request = retrofit.create(MainActivity.RequestAlberghi.class);
+        DashboardActivity.RequestAlberghi request = retrofit.create(DashboardActivity.RequestAlberghi.class);
 
         request.getAlberghi().enqueue(new retrofit2.Callback<ArrayList<Alberghi>>() {
             @Override
