@@ -1,46 +1,20 @@
 package com.example.is_poi;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.core.view.GravityCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.autofill.UserData;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.is_poi.databinding.ActivityMainBinding;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.jackson.JacksonConverterFactory;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
-
 
 public class MainActivity extends AppCompatActivity {
     interface RequestAlberghi{
@@ -51,46 +25,49 @@ public class MainActivity extends AppCompatActivity {
         @GET("/export/json/SUPERFICIE-TERRITORIALE-IN-KMQ-COMUNI-DEL-VENETO.json")
         Call<ArrayList<Comuni>> getComuni();
     }
-    FirebaseAuth auth;
-    FirebaseUser user;
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
+    private MainActivityViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         setContentView(binding.getRoot());
-        replaceFragment(new Search_city());
-        binding.bottomNavigationView.setOnItemSelectedListener(item->{
-            switch(item.getItemId()){
-                case R.id.search_city:
-                    replaceFragment(new Search_city());
-                    break;
-                case R.id.search_poi:
-                    Log.d("test","entra");
-                    replaceFragment(new Search_poi());
-                    break;
-                case R.id.go_to_logout:
-                    Log.d("test","entra");
-                    replaceFragment(new Logout());
-                    break;
-            }
-            return true;
-        });
 
-        auth=FirebaseAuth.getInstance();
-        user= auth.getCurrentUser();
-        if (user==null){
-            Intent intent= new Intent(getApplicationContext(), Login.class);
-            startActivity(intent);
-            finish();
-        }else{
-        }
+        viewModel.fetchMunicipallyData();
 
+        manageViews();
+        initObservers();
     }
-    public void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.FrameLayout,fragment);
-        fragmentTransaction.commit();
+
+    private void initObservers() {
+        viewModel.getUiState().observe(this, uiState -> {
+            if (uiState.municipalities != null) {
+                // Update adapter
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    binding.getRoot().getContext(),
+                    android.R.layout.simple_dropdown_item_1line,
+                    uiState.municipalities
+                );
+                binding.autoCompleteTextView.setAdapter(adapter);
+            }
+        });
+    }
+
+    private void manageViews() {
+        binding.toolbar.setNavigationOnClickListener(view ->
+            binding.drawer.openDrawer(GravityCompat.START)
+        );
+        binding.autoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
+            String selected = (String) adapterView.getItemAtPosition(i);
+            Intent intent=new Intent(getApplicationContext(), SearchCity.class);
+            startActivity(intent);
+            intent.putExtra("comune",selected);
+            Bundle b=new Bundle();
+            b.put
+            intent.putExtra("alberghi",viewModel.getUiState());
+            finish();
+        });
     }
 }
