@@ -1,10 +1,5 @@
 package com.example.is_poi;
 
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -20,7 +15,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DashboardViewModel extends ViewModel {
+public class MainActivityViewModel extends ViewModel {
     private final MutableLiveData<DashboardUiState> uiState =
         new MutableLiveData<>(new DashboardUiState(null));
     public LiveData<DashboardUiState> getUiState() {
@@ -30,7 +25,7 @@ public class DashboardViewModel extends ViewModel {
     public void fetchMunicipallyData() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
-        DashboardActivity.RequestAlberghi request = retrofit.create(DashboardActivity.RequestAlberghi.class);
+        MainActivity.RequestAlberghi request = retrofit.create(MainActivity.RequestAlberghi.class);
 
         request.getAlberghi().enqueue(new retrofit2.Callback<ArrayList<Alberghi>>() {
             @Override

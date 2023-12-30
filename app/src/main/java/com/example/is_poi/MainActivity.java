@@ -4,20 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.example.is_poi.databinding.ActivityDashboardBinding;
+import com.example.is_poi.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 
-public class DashboardActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     interface RequestAlberghi{
         @GET("/export/json/Elenco-delle-Strutture-Ricettive-Turistiche-della-Regione-Veneto.json")
         Call<ArrayList<Alberghi>> getAlberghi();
@@ -26,14 +25,14 @@ public class DashboardActivity extends AppCompatActivity {
         @GET("/export/json/SUPERFICIE-TERRITORIALE-IN-KMQ-COMUNI-DEL-VENETO.json")
         Call<ArrayList<Comuni>> getComuni();
     }
-    private ActivityDashboardBinding binding;
-    private DashboardViewModel viewModel;
+    private ActivityMainBinding binding;
+    private MainActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityDashboardBinding.inflate(getLayoutInflater());
-        viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         setContentView(binding.getRoot());
 
         viewModel.fetchMunicipallyData();
@@ -62,8 +61,13 @@ public class DashboardActivity extends AppCompatActivity {
         );
         binding.autoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
             String selected = (String) adapterView.getItemAtPosition(i);
-            Toast newToast = Toast.makeText(binding.getRoot().getContext(), "Cliccato " + selected, Toast.LENGTH_SHORT);
-            newToast.show();
+            Intent intent=new Intent(getApplicationContext(), SearchCity.class);
+            startActivity(intent);
+            intent.putExtra("comune",selected);
+            Bundle b=new Bundle();
+            b.put
+            intent.putExtra("alberghi",viewModel.getUiState());
+            finish();
         });
     }
 }

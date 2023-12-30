@@ -15,9 +15,11 @@
         android:theme="@style/Theme.Material3.Dark.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".SearchCity"
+            android:exported="false" />
+        <activity
             android:name=".DashboardActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".Registrazione"
             android:exported="false"
@@ -35,7 +37,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
