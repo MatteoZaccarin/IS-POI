@@ -6,7 +6,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.example.is_poi.databinding.ActivityMainBinding;
@@ -65,9 +69,25 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             intent.putExtra("comune",selected);
             Bundle b=new Bundle();
-            b.put
-            intent.putExtra("alberghi",viewModel.getUiState());
+            //intent.putExtra("alberghi",viewModel.getUiState());
             finish();
+        });
+
+
+
+        /*messo la lista dei POI nel menù a tendina*/
+        String[] s=getResources().getStringArray(R.array.poi_type);
+        ArrayAdapter<String> arrayApp=new ArrayAdapter<String>(binding.getRoot().getContext(), R.layout.dropdown_item, s);
+        binding.autoCompleteTextView2.setAdapter(arrayApp);
+
+        /*prendo l'input selezionato*/
+        binding.autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String prova=parent.getItemAtPosition(position).toString();
+                Log.d("occhio!!! -> ",prova);
+                /*mi basta capire come passare sto valore dall'altra parte e sopratutto se devo metterlo dentro a queste view*/
+            }
         });
     }
 }
