@@ -65,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             intent.putExtra("comune",selected);
             Bundle b=new Bundle();
-            b.put
-            intent.putExtra("alberghi",viewModel.getUiState());
+            //intent.putExtra("alberghi",viewModel.getUiState());
             finish();
         });
+        String[] s=getResources().getStringArray(R.array.poi_type);
+        ArrayAdapter<String> arrayApp=new ArrayAdapter<String>(binding.getRoot().getContext(), R.layout.dropdown_item, s);
+        binding.autoCompleteTextView2.setAdapter(arrayApp);
     }
 }
