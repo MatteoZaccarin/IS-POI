@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
-
-
         /*messo la lista dei POI nel menù a tendina*/
         String[] s=getResources().getStringArray(R.array.poi_type);
         ArrayAdapter<String> arrayApp=new ArrayAdapter<String>(binding.getRoot().getContext(), R.layout.dropdown_item, s);
@@ -89,5 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 /*mi basta capire come passare sto valore dall'altra parte e sopratutto se devo metterlo dentro a queste view*/
             }
         });
+
     }
 }
