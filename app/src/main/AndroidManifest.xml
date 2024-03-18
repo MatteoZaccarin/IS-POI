@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Material3.Dark.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".ContentActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchCity"
             android:exported="false" />
         <activity

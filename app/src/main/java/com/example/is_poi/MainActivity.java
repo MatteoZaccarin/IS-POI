@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         @GET("/export/json/Elenco-delle-Strutture-Ricettive-Turistiche-della-Regione-Veneto.json")
         Call<ArrayList<Alberghi>> getAlberghi();
     }
+
     interface RequestComuni{
         @GET("/export/json/SUPERFICIE-TERRITORIALE-IN-KMQ-COMUNI-DEL-VENETO.json")
         Call<ArrayList<Comuni>> getComuni();
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel.fetchMunicipallyData();
 
-        manageViews();
+        manageViews(this);
         initObservers();
     }
 
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void manageViews() {
+    private void manageViews(Context context) {
         binding.toolbar.setNavigationOnClickListener(view ->
             binding.drawer.openDrawer(GravityCompat.START)
         );
@@ -82,8 +84,11 @@ public class MainActivity extends AppCompatActivity {
         binding.autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String prova=parent.getItemAtPosition(position).toString();
-                Log.d("occhio!!! -> ",prova);
+                String poi=parent.getItemAtPosition(position).toString();
+                Log.d("occhio!!! -> ",poi);
+                Intent intent = new Intent(context, ContentActivity.class);
+                intent.putExtra("poi_type", poi);
+                startActivity(intent);
                 /*mi basta capire come passare sto valore dall'altra parte e sopratutto se devo metterlo dentro a queste view*/
             }
         });

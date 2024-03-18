@@ -1,5 +1,7 @@
 package com.example.is_poi;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -49,6 +51,26 @@ public class MainActivityViewModel extends ViewModel {
                 @NonNull Throwable throwable
             ) {
                 return;
+            }
+        });
+    }
+
+    public void fetchPisteDaSci(){
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+        ContentActivity.RequestPisteSci request = retrofit.create(ContentActivity.RequestPisteSci.class);
+
+        request.getPisteSci().enqueue(new retrofit2.Callback<ArrayList<Esperienze>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Esperienze>> call, Response<ArrayList<Esperienze>> response) {
+                for (Esperienze esp : response.body()) {
+                    Log.d("esp", esp.Titolo);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Esperienze>> call, Throwable throwable) {
+                Log.d("error", "chiamata API Piste da scii");
             }
         });
     }

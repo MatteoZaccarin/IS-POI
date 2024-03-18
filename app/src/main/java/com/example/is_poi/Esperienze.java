@@ -6,9 +6,6 @@ import com.google.gson.annotations.SerializedName;
 RoadBike -> https://dati.veneto.it/export/json/Percorsi-Road-Bike-nel-Veneto.json
 Scii di fondo -> https://dati.veneto.it/export/json/Percorsi-Sci-di-Fondo-nel-Veneto.json
 Mountain Bike -> https://dati.veneto.it/export/json/Percorsi-Mountain-Bike-nel-Veneto.json
-
-
-
 */
 
 public class Esperienze {
