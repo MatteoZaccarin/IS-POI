@@ -27,19 +27,19 @@ public class MainActivityViewModel extends ViewModel {
     public void fetchMunicipallyData() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
-        MainActivity.RequestAlberghi request = retrofit.create(MainActivity.RequestAlberghi.class);
+        MainActivity.RequestComuni request = retrofit.create(MainActivity.RequestComuni.class);
 
-        request.getAlberghi().enqueue(new retrofit2.Callback<ArrayList<Alberghi>>() {
+        request.getComuni().enqueue(new retrofit2.Callback<ArrayList<Comuni>>() {
             @Override
             public void onResponse(
-                @NonNull Call<ArrayList<Alberghi>> call,
-                @NonNull Response<ArrayList<Alberghi>> response
+                @NonNull Call<ArrayList<Comuni>> call,
+                @NonNull Response<ArrayList<Comuni>> response
             ) {
                 List<String> mapList = new ArrayList<>();
                 if (response.body() != null) {
-                    for (Alberghi alberghi : response.body()) {
-                        if (!mapList.contains(alberghi.COMUNE)) {
-                            mapList.add(alberghi.COMUNE);
+                    for (Comuni temp : response.body()) {
+                        if (!mapList.contains(temp.Comune)) {
+                            mapList.add(temp.Comune);
                         }
                     }
                 }
@@ -47,7 +47,7 @@ public class MainActivityViewModel extends ViewModel {
             }
             @Override
             public void onFailure(
-                @NonNull Call<ArrayList<Alberghi>> call,
+                @NonNull Call<ArrayList<Comuni>> call,
                 @NonNull Throwable throwable
             ) {
                 return;
