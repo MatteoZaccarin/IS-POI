@@ -3,9 +3,11 @@ package com.example.is_poi;
 import java.util.List;
 
 public class DashboardUiState {
-    public final List<String> municipalities;
+    public final List<Comuni> comuni;
+    public final List<Alberghi> alberghi;
 
-    public DashboardUiState(List<String> municipalities) {
-        this.municipalities = municipalities;
+    public DashboardUiState(List<Comuni> comuni, List<Alberghi> alberghi) {
+        this.comuni = comuni;
+        this.alberghi = alberghi;
     }
 }

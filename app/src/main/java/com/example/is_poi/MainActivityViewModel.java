@@ -62,15 +62,15 @@ public class MainActivityViewModel extends ViewModel {
                 @NonNull Call<ArrayList<Comuni>> call,
                 @NonNull Response<ArrayList<Comuni>> response
             ) {
-                List<String> mapList = new ArrayList<>();
+                List<Comuni> mapList = new ArrayList<>();
                 if (response.body() != null) {
                     for (Comuni temp : response.body()) {
-                        if (!mapList.contains(temp.Comune)) {
-                            mapList.add(temp.Comune);
+                        if (!mapList.contains(temp)) {
+                            mapList.add(temp);
                         }
                     }
                 }
-                uiState.postValue(new DashboardUiState(mapList));
+                uiState.postValue(new DashboardUiState(mapList,null));
             }
             @Override
             public void onFailure(

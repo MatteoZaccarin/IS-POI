@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initObservers() {
         viewModel.getUiState().observe(this, uiState -> {
-            if (uiState.municipalities != null) {
+            if (uiState.comuni != null) {
                 // Update adapter
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
                     binding.getRoot().getContext(),
                     android.R.layout.simple_dropdown_item_1line,
-                    uiState.municipalities
+                    uiState.comuni
                 );
                 binding.autoCompleteTextView.setAdapter(adapter);
             }
