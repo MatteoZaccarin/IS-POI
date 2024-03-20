@@ -53,6 +53,7 @@ public class ContentActivity extends AppCompatActivity {
                 break;
             case "Piste ciclabili":
                 Log.d("a","3");
+                getPisteCiclabili();
                 break;
             case "Alberghi":
                 Log.d("a","4");
@@ -60,6 +61,7 @@ public class ContentActivity extends AppCompatActivity {
                 break;
             case "Sentieri enogastronomici":
                 Log.d("a","5");
+                getSentieriEnogastronomici();
                 break;
         }
     }
@@ -76,7 +78,28 @@ public class ContentActivity extends AppCompatActivity {
             }
         });
     }
+    private void getPisteCiclabili(){
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        viewModel.fetchPisteCiclabili();
 
+        viewModel.getMyRoadBike().observe(this, new Observer<ArrayList<Esperienze>>() {
+            @Override
+            public void onChanged(ArrayList<Esperienze> esperienzes) {
+                for(Esperienze esp : esperienzes){
+                    Log.d("roadbike", esp.Titolo);
+                }
+            }
+        });
+
+        viewModel.getMyMountainBike().observe(this, new Observer<ArrayList<Esperienze>>() {
+            @Override
+            public void onChanged(ArrayList<Esperienze> esperienzes) {
+                for(Esperienze esp: esperienzes){
+                    Log.d("mountainbike", esp.Titolo);
+                }
+            }
+        });
+    }
     private void getSentieriStorici(){
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         viewModel.fetchSentieri();
@@ -92,7 +115,7 @@ public class ContentActivity extends AppCompatActivity {
     }
 
     private void getListAlberghi(){
-        viewModel =new ViewModelProvider(this).get(MainActivityViewModel.class);
+        viewModel =MainActivity.viewModel;
         viewModel.fetchAlberghi();
 
         viewModel.getMyAlberghi().observe(this, new Observer<ArrayList<Alberghi>>() {
@@ -100,6 +123,20 @@ public class ContentActivity extends AppCompatActivity {
             public void onChanged(ArrayList<Alberghi> alberghis) {
                 for(Alberghi a: alberghis){
                     Log.d("alberghi",a.EMAIL);
+                }
+            }
+        });
+    }
+
+    private void getSentieriEnogastronomici(){
+        viewModel=new ViewModelProvider(this).get(MainActivityViewModel.class);
+        viewModel.fetchSentieriEnogastronomici();
+
+        viewModel.getMySentieriEnogastronomici().observe(this, new Observer<ArrayList<SentieriPanoramici>>() {
+            @Override
+            public void onChanged(ArrayList<SentieriPanoramici> sentieriPanoramicis) {
+                for(SentieriPanoramici sp : sentieriPanoramicis){
+                    Log.d("sentieri enogastronomici", sp.Titolo);
                 }
             }
         });
@@ -117,5 +154,17 @@ public class ContentActivity extends AppCompatActivity {
     interface  RequestAlberghi{
         @GET("/export/json/Elenco-delle-Strutture-Ricettive-Turistiche-della-Regione-Veneto.json")
         Call<ArrayList<Alberghi>> getAlberghi();
+    }
+    interface RequestRoadBike{
+        @GET("export/json/Percorsi-Road-Bike-nel-Veneto.json")
+        Call<ArrayList<Esperienze>> getRoadBike();
+    }
+    interface  RequestMountainBike{
+        @GET("export/json/Percorsi-Mountain-Bike-nel-Veneto.json")
+        Call<ArrayList<Esperienze>> getMountainBike();
+    }
+    interface RequestSentieriEnogastronomici{
+        @GET("export/json/Sentieri-Enogastronomici-nel-Veneto.json")
+        Call<ArrayList<SentieriPanoramici>> getSentieriEnogastronomici();
     }
 }

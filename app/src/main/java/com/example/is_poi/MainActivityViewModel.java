@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivityViewModel extends ViewModel {
     private final MutableLiveData<DashboardUiState> uiState =
-        new MutableLiveData<>(new DashboardUiState(null));
+        new MutableLiveData<DashboardUiState>(new DashboardUiState(null, null));
     public LiveData<DashboardUiState> getUiState() {
         return uiState;
     }
@@ -28,6 +28,29 @@ public class MainActivityViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Esperienze>> myEsperienze_PisteSci;
     public MutableLiveData<ArrayList<SentieriPanoramici>>  mySentieriPanoramici_SentieriStorici;
     public MutableLiveData<ArrayList<Alberghi>> myAlberghi;
+    public MutableLiveData<ArrayList<Esperienze>> myRoadBike;
+    public MutableLiveData<ArrayList<Esperienze>> myMountainBike;
+    public MutableLiveData<ArrayList<SentieriPanoramici>> mySentieriEnogastronomici;
+
+    public MutableLiveData<ArrayList<SentieriPanoramici>> getMySentieriEnogastronomici(){
+        if(mySentieriEnogastronomici==null){
+            mySentieriEnogastronomici=new MutableLiveData<ArrayList<SentieriPanoramici>>();
+        }
+        return mySentieriEnogastronomici;
+    }
+    public MutableLiveData<ArrayList<Esperienze>> getMyMountainBike(){
+        if(myMountainBike==null){
+            myMountainBike=new MutableLiveData<ArrayList<Esperienze>>();
+        }
+        return myMountainBike;
+    }
+
+    public MutableLiveData<ArrayList<Esperienze>> getMyRoadBike(){
+        if(myRoadBike==null){
+            myRoadBike=new MutableLiveData<ArrayList<Esperienze>>();
+        }
+        return myRoadBike;
+    }
 
     public MutableLiveData<ArrayList<SentieriPanoramici>> getMySentieriPanoramici_SentieriStorici() {
         if(mySentieriPanoramici_SentieriStorici==null){
@@ -95,7 +118,7 @@ public class MainActivityViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<ArrayList<Esperienze>> call, Throwable throwable) {
-                Log.d("error", "chiamata API Piste da scii");
+                Log.e("error", "chiamata API Piste da scii");
             }
         });
     }
@@ -113,25 +136,75 @@ public class MainActivityViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<ArrayList<SentieriPanoramici>> call, Throwable t) {
-                Log.d("error", "chiamata API sentieri storici");
+                Log.e("error", "chiamata API sentieri storici");
             }
         });
     }
 
     public void fetchAlberghi(){
+        if(myAlberghi==null){
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+            ContentActivity.RequestAlberghi request = retrofit.create(ContentActivity.RequestAlberghi.class);
+            Log.d("send","request API alberghi");
+            request.getAlberghi().enqueue(new Callback<ArrayList<Alberghi>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Alberghi>> call, Response<ArrayList<Alberghi>> response) {
+                    MainActivityViewModel.this.myAlberghi.setValue(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Alberghi>> call, Throwable t) {
+                    Log.e("error", "chiamata API alberghi");
+                }
+            });
+        }
+
+    }
+    public void fetchPisteCiclabili(){
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
-        ContentActivity.RequestAlberghi request = retrofit.create(ContentActivity.RequestAlberghi.class);
+        ContentActivity.RequestRoadBike request = retrofit.create(ContentActivity.RequestRoadBike.class);
 
-        request.getAlberghi().enqueue(new Callback<ArrayList<Alberghi>>() {
+        request.getRoadBike().enqueue(new Callback<ArrayList<Esperienze>>() {
             @Override
-            public void onResponse(Call<ArrayList<Alberghi>> call, Response<ArrayList<Alberghi>> response) {
-                MainActivityViewModel.this.myAlberghi.setValue(response.body());
+            public void onResponse(Call<ArrayList<Esperienze>> call, Response<ArrayList<Esperienze>> response) {
+                MainActivityViewModel.this.myRoadBike.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Alberghi>> call, Throwable t) {
-                Log.d("error", "chiamata API alberghi");
+            public void onFailure(Call<ArrayList<Esperienze>> call, Throwable t) {
+                Log.e("error","chiamata API roadbike");
+            }
+        });
+
+        ContentActivity.RequestMountainBike request1 = retrofit.create(ContentActivity.RequestMountainBike.class);
+        request1.getMountainBike().enqueue(new Callback<ArrayList<Esperienze>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Esperienze>> call, Response<ArrayList<Esperienze>> response) {
+                MainActivityViewModel.this.myMountainBike.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Esperienze>> call, Throwable t) {
+            Log.e("error", "chiamata API mountainbike");
+            }
+        });
+    }
+    public void fetchSentieriEnogastronomici(){
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+        ContentActivity.RequestSentieriEnogastronomici request = retrofit.create(ContentActivity.RequestSentieriEnogastronomici.class);
+
+        request.getSentieriEnogastronomici().enqueue(new Callback<ArrayList<SentieriPanoramici>>() {
+            @Override
+            public void onResponse(Call<ArrayList<SentieriPanoramici>> call, Response<ArrayList<SentieriPanoramici>> response) {
+                MainActivityViewModel.this.mySentieriEnogastronomici.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<SentieriPanoramici>> call, Throwable t) {
+                Log.e("error", "chiamata API Sentieri Enogastronomici");
             }
         });
     }

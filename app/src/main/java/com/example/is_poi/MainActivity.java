@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Call<ArrayList<Comuni>> getComuni();
     }
     private ActivityMainBinding binding;
-    private MainActivityViewModel viewModel;
+    public static MainActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
