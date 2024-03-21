@@ -30,5 +30,4 @@ public class Esperienze {
     String Gennaio;String Febbraio;String Marzo;String Aprile;String Maggio;String Giugno;
     String Luglio;String Agosto;String Settembre;String Ottobre;String Novembre;String Dicembre;
 
-
 }
