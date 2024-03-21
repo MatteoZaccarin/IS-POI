@@ -136,7 +136,6 @@ public class MainActivityViewModel extends ViewModel {
                 public void onResponse(Call<ArrayList<SentieriPanoramici>> call, Response<ArrayList<SentieriPanoramici>> response) {
                     MainActivityViewModel.this.mySentieriPanoramici_SentieriStorici.setValue(response.body());
                 }
-
                 @Override
                 public void onFailure(Call<ArrayList<SentieriPanoramici>> call, Throwable t) {
                     Log.e("error", "chiamata API sentieri storici");
