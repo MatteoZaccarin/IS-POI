@@ -104,6 +104,41 @@ public class ContentActivity extends AppCompatActivity {
                 for (SentieriPanoramici sp: sentieriPanoramicis){
                     Log.d("piste ciclabili", sp.Titolo);
                 }
+                RecyclerView RW =findViewById((R.id.recyclerview));
+
+                RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
+                RW.setAdapter(new SciAdapter(getApplicationContext(), esperienzes));
+
+            }
+        });
+    }
+    private void getPisteCiclabili(){
+        viewModel = MainActivity.viewModel;
+        viewModel.fetchPisteCiclabili();
+
+        viewModel.getMyRoadBike().observe(this, new Observer<ArrayList<Esperienze>>() {
+            @Override
+            public void onChanged(ArrayList<Esperienze> esperienzes) {
+                for(Esperienze esp : esperienzes){
+                    Log.d("roadbike", esp.Titolo);
+                }
+            }
+        });
+
+        viewModel.getMyMountainBike().observe(this, new Observer<ArrayList<Esperienze>>() {
+            @Override
+            public void onChanged(ArrayList<Esperienze> esperienzes) {
+                for(Esperienze esp: esperienzes){
+                    Log.d("mountainbike", esp.Titolo);
+                }
+            }
+        });
+        viewModel.getMyPisteCiclabili().observe(this, new Observer<ArrayList<SentieriPanoramici>>() {
+            @Override
+            public void onChanged(ArrayList<SentieriPanoramici> sentieriPanoramicis) {
+                for (SentieriPanoramici sp: sentieriPanoramicis){
+                    Log.d("piste ciclabili", sp.Titolo);
+                }
             }
         });
     }

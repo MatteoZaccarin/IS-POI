@@ -31,5 +31,4 @@ public class Esperienze {
     String Luglio;String Agosto;String Settembre;String Ottobre;String Novembre;String Dicembre;
 
     int image;
-
 }
