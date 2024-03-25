@@ -18,7 +18,7 @@ public class Esperienze {
     @SerializedName("Informazioni sulla Sicurezza")
     String informazioniSicurezza;
     String Equipaggiamento;
-    @SerializedName("Consigli suggerimenti e link utili")
+    @SerializedName("Consigli, suggerimenti e link utili")
     String consigli;
     @SerializedName("Punto di partenza")
     String PuntoDiPartenza;
@@ -30,5 +30,6 @@ public class Esperienze {
     String Gennaio;String Febbraio;String Marzo;String Aprile;String Maggio;String Giugno;
     String Luglio;String Agosto;String Settembre;String Ottobre;String Novembre;String Dicembre;
 
+    int image;
 
 }

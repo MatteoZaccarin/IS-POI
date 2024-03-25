@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp">
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageview"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Titolo"
+        android:textColor="@color/white"
+        android:layout_toEndOf="@id/imageview"
+        android:text="Titolo"
+        android:textSize="18dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Sintesi"
+        android:textColor="@color/white"
+        android:layout_toEndOf="@id/imageview"
+        android:layout_below="@+id/Titolo"
+        android:text="Sintesi"
+        android:textSize="14dp"/>
+
+    <LinearLayout
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Sintesi"
+        android:layout_toEndOf="@id/imageview"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Zona"
+            android:layout_width="70dp"
+            android:layout_height="5dp"
+            android:text="Zona"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/Link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Link"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/info"
+        android:background="@color/white"/>
+</RelativeLayout>
