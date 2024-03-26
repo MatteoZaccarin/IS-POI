@@ -1,5 +1,6 @@
 package com.example.is_poi;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,14 +32,14 @@ public class ContentActivity extends AppCompatActivity {
         Log.d("Arrivato", poi_type);
 
 
-        setTypeOfPOI(poi_type);
+        setTypeOfPOI(poi_type, this);
     }
 
-    private void setTypeOfPOI(String value){
+    private void setTypeOfPOI(String value, Activity a){
         switch (value){
             case "Piste da sci":
                 Log.d("a","1");
-                getPisteDaSci();
+                getPisteDaSci(a);
                 break;
             case "Sentieri":
                 Log.d("a","2");
@@ -59,7 +60,7 @@ public class ContentActivity extends AppCompatActivity {
         }
     }
 
-    private void getPisteDaSci(){
+    private void getPisteDaSci(Activity a){
         viewModel = MainActivity.viewModel;
         viewModel.fetchPisteDaSci();
         viewModel.getMyEsperienze_PisteSci().observe(this, new Observer<ArrayList<Esperienze>>() {
@@ -72,42 +73,7 @@ public class ContentActivity extends AppCompatActivity {
 
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
-                RW.setAdapter(new SciAdapter(getApplicationContext(), esperienzes));
-
-            }
-        });
-    }
-    private void getPisteCiclabili(){
-        viewModel = MainActivity.viewModel;
-        viewModel.fetchPisteCiclabili();
-
-        viewModel.getMyRoadBike().observe(this, new Observer<ArrayList<Esperienze>>() {
-            @Override
-            public void onChanged(ArrayList<Esperienze> esperienzes) {
-                for(Esperienze esp : esperienzes){
-                    Log.d("roadbike", esp.Titolo);
-                }
-            }
-        });
-
-        viewModel.getMyMountainBike().observe(this, new Observer<ArrayList<Esperienze>>() {
-            @Override
-            public void onChanged(ArrayList<Esperienze> esperienzes) {
-                for(Esperienze esp: esperienzes){
-                    Log.d("mountainbike", esp.Titolo);
-                }
-            }
-        });
-        viewModel.getMyPisteCiclabili().observe(this, new Observer<ArrayList<SentieriPanoramici>>() {
-            @Override
-            public void onChanged(ArrayList<SentieriPanoramici> sentieriPanoramicis) {
-                for (SentieriPanoramici sp: sentieriPanoramicis){
-                    Log.d("piste ciclabili", sp.Titolo);
-                }
-                RecyclerView RW =findViewById((R.id.recyclerview));
-
-                RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
-                RW.setAdapter(new SciAdapter(getApplicationContext(), esperienzes));
+                RW.setAdapter(new SciAdapter(a, esperienzes));
 
             }
         });
