@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class Alberghi{
     String PROVINCIA;
-    String COMUNE="bella";
+    String COMUNE;
     String LOCALITA;
     String TIPOLOGIA;
     String TIPOLOGIASECONDARIA;
@@ -39,6 +39,7 @@ public class Alberghi{
     String STAZIONEFS;
     String MARE;
     String TERMALE;
+    String STELLE;
     String PERIFERIA;
     String COLLINARE;
     String INGLESE;
