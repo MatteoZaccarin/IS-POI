@@ -1,22 +1,26 @@
 package com.example.is_poi;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Vector;
 
 public class Alberghi{
     String PROVINCIA;
-    String COMUNE="bella";
+    String COMUNE;
     String LOCALITA;
     String TIPOLOGIA;
     String TIPOLOGIASECONDARIA;
     String DENOMINAZIONE;
     String INDIRIZZO;
     String NUMERO;
+    @SerializedName("NUMERO CIVICO")
     String CIVICO;
     String INTERNO;
     String CAP;
     String TELEFONO;
     String FAX;
     String EMAIL;
+    @SerializedName("SITO WEB")
     String SITOWEB;
     String ZONA;
     String PISCINA;
@@ -39,6 +43,7 @@ public class Alberghi{
     String STAZIONEFS;
     String MARE;
     String TERMALE;
+    String STELLE;
     String PERIFERIA;
     String COLLINARE;
     String INGLESE;
@@ -49,5 +54,7 @@ public class Alberghi{
     String CODICEIDENTIFICATIVO;
     String DATAULTIMAMODIFICA;
     String CLASSIFICAZIONE;
+
+    int icon;
 }
 
