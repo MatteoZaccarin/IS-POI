@@ -30,12 +30,12 @@ public class MainActivityViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Alberghi>> myAlberghi;
     public MutableLiveData<ArrayList<Esperienze>> myRoadBike;
     public MutableLiveData<ArrayList<Esperienze>> myMountainBike;
-    public MutableLiveData<ArrayList<SentieriPanoramici>> myPisteCiclabili;
+    public MutableLiveData<ArrayList<Esperienze>> myPisteCiclabili;
     public MutableLiveData<ArrayList<SentieriPanoramici>> mySentieriEnogastronomici;
 
-    public MutableLiveData<ArrayList<SentieriPanoramici>> getMyPisteCiclabili(){
+    public MutableLiveData<ArrayList<Esperienze>> getMyPisteCiclabili(){
         if(myPisteCiclabili==null){
-            myPisteCiclabili=new MutableLiveData<ArrayList<SentieriPanoramici>>();
+            myPisteCiclabili=new MutableLiveData<ArrayList<Esperienze>>();
         }
         return myPisteCiclabili;
     }
@@ -211,14 +211,17 @@ public class MainActivityViewModel extends ViewModel {
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
             Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
             ContentActivity.RequestPisteCiclabili request1 = retrofit.create(ContentActivity.RequestPisteCiclabili.class);
-            request1.getPisteCiclabili().enqueue(new Callback<ArrayList<SentieriPanoramici>>() {
+            request1.getPisteCiclabili().enqueue(new Callback<ArrayList<Esperienze>>() {
                 @Override
-                public void onResponse(Call<ArrayList<SentieriPanoramici>> call, Response<ArrayList<SentieriPanoramici>> response) {
+                public void onResponse(Call<ArrayList<Esperienze>> call, Response<ArrayList<Esperienze>> response) {
+                    for(Esperienze esp: response.body()){
+                        esp.Categoria="Piste Ciclabili";
+                    }
                     MainActivityViewModel.this.myPisteCiclabili.setValue(response.body());
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<SentieriPanoramici>> call, Throwable t) {
+                public void onFailure(Call<ArrayList<Esperienze>> call, Throwable t) {
                     Log.e("error", "chiamata API mountainbike");
                 }
             });

@@ -47,7 +47,7 @@ public class ContentActivity extends AppCompatActivity {
                 break;
             case "Piste ciclabili":
                 Log.d("a","3");
-                getPisteCiclabili();
+                getPisteCiclabili(a);
                 break;
             case "Alberghi":
                 Log.d("a","4");
@@ -78,13 +78,16 @@ public class ContentActivity extends AppCompatActivity {
             }
         });
     }
-    private void getPisteCiclabili(){
+    private void getPisteCiclabili(Activity a){
         viewModel = MainActivity.viewModel;
         viewModel.fetchPisteCiclabili();
-
+        RecyclerView RW =findViewById((R.id.recyclerview));
+        RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
+        ArrayList<Esperienze> espContainer=new ArrayList<Esperienze>();
         viewModel.getMyRoadBike().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> esperienzes) {
+                espContainer.addAll(esperienzes);
                 for(Esperienze esp : esperienzes){
                     Log.d("roadbike", esp.Titolo);
                 }
@@ -94,19 +97,24 @@ public class ContentActivity extends AppCompatActivity {
         viewModel.getMyMountainBike().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> esperienzes) {
+                espContainer.addAll(esperienzes);
                 for(Esperienze esp: esperienzes){
                     Log.d("mountainbike", esp.Titolo);
                 }
             }
         });
-        viewModel.getMyPisteCiclabili().observe(this, new Observer<ArrayList<SentieriPanoramici>>() {
+        viewModel.getMyPisteCiclabili().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
-            public void onChanged(ArrayList<SentieriPanoramici> sentieriPanoramicis) {
-                for (SentieriPanoramici sp: sentieriPanoramicis){
+            public void onChanged(ArrayList<Esperienze> esperienzes) {
+                espContainer.addAll(esperienzes);
+                for (Esperienze sp: esperienzes){
                     Log.d("piste ciclabili", sp.Titolo);
                 }
+                RW.setAdapter(new CiclabiliMountainAdapter(a,espContainer));
             }
         });
+
+
     }
     private void getSentieriStorici(Activity a){
         viewModel = MainActivity.viewModel;
@@ -183,6 +191,6 @@ public class ContentActivity extends AppCompatActivity {
     }
     interface  RequestPisteCiclabili{
         @GET("export/json/Percorsi-Ciclabili-Panoramici-nel-Veneto.json")
-        Call<ArrayList<SentieriPanoramici>> getPisteCiclabili();
+        Call<ArrayList<Esperienze>> getPisteCiclabili();
     }
 }
