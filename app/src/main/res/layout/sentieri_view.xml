@@ -21,30 +21,21 @@
         android:text="Titolo"
         android:textSize="18dp"/>
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Sintesi"
         android:layout_below="@id/Titolo"
         android:layout_toEndOf="@+id/imageview"
         android:textColor="@color/white"
-        android:text="Sintesi"
+        android:visibility="gone"
         android:textSize="14dp"/>
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Zona"
         android:layout_below="@id/Sintesi"
         android:layout_toEndOf="@+id/imageview"
         android:textColor="@color/white"
-        android:text="Zona"
+        android:visibility="gone"
         android:textSize="14dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Zona"
-        android:id="@+id/Descrizione"
-        android:textColor="@color/white"
-        android:text="Descrizione"
-        android:textSize="12dp"/>
-
 </RelativeLayout>

@@ -87,29 +87,33 @@ public class ContentActivity extends AppCompatActivity {
         viewModel.getMyRoadBike().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> esperienzes) {
-                espContainer.addAll(esperienzes);
+
                 for(Esperienze esp : esperienzes){
                     Log.d("roadbike", esp.Titolo);
+                    esp.image=R.drawable.bici;
                 }
+                espContainer.addAll(esperienzes);
             }
         });
 
         viewModel.getMyMountainBike().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> esperienzes) {
-                espContainer.addAll(esperienzes);
                 for(Esperienze esp: esperienzes){
                     Log.d("mountainbike", esp.Titolo);
+                    esp.image=R.drawable.mbike;
                 }
+                espContainer.addAll(esperienzes);
             }
         });
         viewModel.getMyPisteCiclabili().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> esperienzes) {
-                espContainer.addAll(esperienzes);
                 for (Esperienze sp: esperienzes){
                     Log.d("piste ciclabili", sp.Titolo);
+                    sp.image=R.drawable.bici;
                 }
+                espContainer.addAll(esperienzes);
                 RW.setAdapter(new CiclabiliMountainAdapter(a,espContainer));
             }
         });
@@ -125,6 +129,7 @@ public class ContentActivity extends AppCompatActivity {
             public void onChanged(ArrayList<SentieriPanoramici> sentieriPanoramicis) {
                 for(SentieriPanoramici sp : sentieriPanoramicis ){
                     Log.d("sentieri", sp.Titolo);
+                    sp.image=R.drawable.sentiero;
                 }
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));

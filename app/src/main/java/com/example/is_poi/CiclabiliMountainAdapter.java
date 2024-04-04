@@ -28,7 +28,7 @@ public class CiclabiliMountainAdapter extends RecyclerView.Adapter<CiclabiliView
 
     @Override
     public void onBindViewHolder(@NonNull CiclabiliViewHolder holder, int position) {
-        //holder.icon.setImageResource(listaCiclabiliMountain.get(position).icon); immagine da fare
+        holder.icon.setImageResource(listaCiclabiliMountain.get(position).image);
         holder.titolo.setText(listaCiclabiliMountain.get(position).Titolo.replace("?","'"));
 
         String dirtyText=listaCiclabiliMountain.get(position).Sintesi.split("\\.")[0];

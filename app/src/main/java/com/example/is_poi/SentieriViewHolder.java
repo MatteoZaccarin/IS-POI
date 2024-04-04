@@ -20,6 +20,5 @@ public class SentieriViewHolder extends RecyclerView.ViewHolder {
         titolo=itemView.findViewById(R.id.Titolo);
         sintesi=itemView.findViewById(R.id.Sintesi);
         zona=itemView.findViewById(R.id.Zona);
-        descrizione=itemView.findViewById(R.id.Descrizione);
     }
 }
