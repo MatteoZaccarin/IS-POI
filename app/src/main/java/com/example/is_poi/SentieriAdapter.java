@@ -43,26 +43,21 @@ public class SentieriAdapter extends RecyclerView.Adapter<SentieriViewHolder> {
         }catch (UnsupportedEncodingException e){
             e.printStackTrace();
         }
-        try{
-            //in questo blocco cerco di prendere una frase e tenere la prima in maiuscolo e il resto minuscolo ma crasha l'emulatore
-            /*String inizio=dirtyTextSintesi.substring(0,1);
-            String fine=dirtyTextSintesi.substring(1);
-            fine=fine.toLowerCase();
-            dirtyTextSintesi=inizio+fine;*/
-            byte[] bytes= dirtyTextSintesi.getBytes("Windows-1252");
-            String cleanSintesi=new String(bytes,"Windows-1252" );
-            cleanSintesi=cleanSintesi.toLowerCase();
-            if(!cleanSintesi.isEmpty()){
-                holder.sintesi.setVisibility(View.VISIBLE);
-                holder.sintesi.setTypeface(holder.sintesi.getTypeface(), Typeface.ITALIC);
-                holder.sintesi.setText(cleanSintesi.split("\\.")[0]);
-            }else{
-                holder.sintesi.setVisibility(View.GONE);
-            }
-            /*holder.sintesi.setTypeface(holder.sintesi.getTypeface(), Typeface.ITALIC);
-            holder.sintesi.setText(cleanSintesi.split("\\.")[0]);*/
-        }catch (UnsupportedEncodingException e){
-            e.printStackTrace();
+
+        //in questo blocco cerco di prendere una frase e tenere la prima in maiuscolo e il resto minuscolo ma crasha l'emulatore
+        /*String inizio=dirtyTextSintesi.substring(0,1);
+        String fine=dirtyTextSintesi.substring(1);
+        fine=fine.toLowerCase();
+        dirtyTextSintesi=inizio+fine;*/
+
+        String cleanSintesi=Utili.formattaTesto(dirtyTextSintesi);
+        cleanSintesi=cleanSintesi.toLowerCase();
+        if(!cleanSintesi.isEmpty()){
+            holder.sintesi.setVisibility(View.VISIBLE);
+            holder.sintesi.setTypeface(holder.sintesi.getTypeface(), Typeface.ITALIC);
+            holder.sintesi.setText(cleanSintesi.split("\\.")[0]);
+        }else{
+            holder.sintesi.setVisibility(View.GONE);
         }
         try{
             byte[] bytes= dirtyTextZona.getBytes("Windows-1252");
