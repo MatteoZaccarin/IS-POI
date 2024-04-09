@@ -31,16 +31,9 @@ public class CiclabiliMountainAdapter extends RecyclerView.Adapter<CiclabiliView
         holder.icon.setImageResource(listaCiclabiliMountain.get(position).image);
         holder.titolo.setText(listaCiclabiliMountain.get(position).Titolo.replace("?","'"));
 
-        String dirtyText=listaCiclabiliMountain.get(position).Sintesi.split("\\.")[0];
+        String cleanText=Utili.formattaTesto(listaCiclabiliMountain.get(position).Sintesi.split("\\.")[0]);
+        holder.sintesi.setText(cleanText.replace("?","'"));
 
-        try{
-            byte[] bytes = dirtyText.getBytes("Windows-1252");
-            String cleanText = new String(bytes, "Windows-1252");
-            cleanText.replace("?","'");
-            holder.sintesi.setText(cleanText);
-        }catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-        }
         holder.categoria.setText("Categoria: "+listaCiclabiliMountain.get(position).Categoria);
         if(listaCiclabiliMountain.get(position).Categoria!="Piste Ciclabili"){
             if(listaCiclabiliMountain.get(position).PuntoDiPartenza.compareTo(listaCiclabiliMountain.get(position).PuntoDiArrivo)!=0){
