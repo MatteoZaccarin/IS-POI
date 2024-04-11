@@ -53,11 +53,32 @@ public class ContentActivity extends AppCompatActivity {
                 Log.d("a","4");
                 getListAlberghi(a);
                 break;
-            case "Sentieri enogastronomici":
+            case "Agriturismo":
                 Log.d("a","5");
-                getSentieriEnogastronomici();
+                getListAgriturismo(a);
                 break;
         }
+    }
+
+    private void getListAgriturismo(Activity a) {
+        viewModel = MainActivity.viewModel;
+        viewModel.fetchAlberghi();
+
+        viewModel.getMyStrutture().observe(this, new Observer<ArrayList<Alberghi>>() {
+            @Override
+            public void onChanged(ArrayList<Alberghi> alberghis) {
+                ArrayList<Alberghi> soloAgriturismi=new ArrayList<>();
+                for(Alberghi a: alberghis){
+                    if(a.TIPOLOGIA.compareTo("AGRITURISMO")==0){
+                        a.icon=R.drawable.agri;
+                        soloAgriturismi.add(a);
+                    }
+                }
+                RecyclerView RW =findViewById((R.id.recyclerview));
+                RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
+                RW.setAdapter(new AlberghiAdapter(a, soloAgriturismi));
+            }
+        });
     }
 
     private void getPisteDaSci(Activity a){
@@ -66,6 +87,7 @@ public class ContentActivity extends AppCompatActivity {
         viewModel.getMyEsperienze_PisteSci().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> esperienzes) {
+                // spostare sta roba nel view model
                 for(Esperienze esp : esperienzes ){
                     esp.image=R.drawable.sci;
                     Log.d("link", esp.consigli);
@@ -87,7 +109,7 @@ public class ContentActivity extends AppCompatActivity {
         viewModel.getMyRoadBike().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> esperienzes) {
-
+                // spostare sta roba nel view model
                 for(Esperienze esp : esperienzes){
                     Log.d("roadbike", esp.Titolo);
                     esp.image=R.drawable.bici;
@@ -99,6 +121,7 @@ public class ContentActivity extends AppCompatActivity {
         viewModel.getMyMountainBike().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> esperienzes) {
+                // spostare sta roba nel view model
                 for(Esperienze esp: esperienzes){
                     Log.d("mountainbike", esp.Titolo);
                     esp.image=R.drawable.mbike;
@@ -109,6 +132,7 @@ public class ContentActivity extends AppCompatActivity {
         viewModel.getMyPisteCiclabili().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> esperienzes) {
+                // spostare sta roba nel view model
                 for (Esperienze sp: esperienzes){
                     Log.d("piste ciclabili", sp.Titolo);
                     sp.image=R.drawable.bici;
@@ -124,12 +148,22 @@ public class ContentActivity extends AppCompatActivity {
         viewModel = MainActivity.viewModel;
         viewModel.fetchSentieri();
 
-        viewModel.getMySentieriPanoramici_SentieriStorici().observe(this, new Observer<ArrayList<SentieriPanoramici>>() {
+        viewModel.getMySentieriPanoramici().observe(this, new Observer<ArrayList<SentieriPanoramici>>() {
             @Override
             public void onChanged(ArrayList<SentieriPanoramici> sentieriPanoramicis) {
+                // spostare sta roba nel view model
                 for(SentieriPanoramici sp : sentieriPanoramicis ){
                     Log.d("sentieri", sp.Titolo);
-                    sp.image=R.drawable.sentiero;
+                    if(sp.Categoria.compareTo("Storico-Culturale")==0){
+                        sp.image=R.drawable.sentiero;
+                    }else{
+                        if(sp.Categoria.compareTo("Panoramico")==0){
+                            sp.image=R.drawable.panorama;
+                        }else{
+                            //enogastronomico
+                            sp.image=R.drawable.eno;
+                        }
+                    }
                 }
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
@@ -141,30 +175,19 @@ public class ContentActivity extends AppCompatActivity {
         viewModel =MainActivity.viewModel;
         viewModel.fetchAlberghi();
 
-        viewModel.getMyAlberghi().observe(this, new Observer<ArrayList<Alberghi>>() {
+        viewModel.getMyStrutture().observe(this, new Observer<ArrayList<Alberghi>>() {
             @Override
             public void onChanged(ArrayList<Alberghi> alberghis) {
+                ArrayList<Alberghi> soloAlberghi=new ArrayList<>();
                 for(Alberghi a: alberghis){
-                    a.icon=R.drawable.hotel;
-                    Log.d("alberghi",a.EMAIL);
+                    if(a.TIPOLOGIA.compareTo("ALBERGO")==0){
+                        a.icon=R.drawable.hotel;
+                        soloAlberghi.add(a);
+                    }
                 }
-
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
-                RW.setAdapter(new AlberghiAdapter(a, alberghis));
-            }
-        });
-    }
-    private void getSentieriEnogastronomici(){
-        viewModel=MainActivity.viewModel;
-        viewModel.fetchSentieriEnogastronomici();
-
-        viewModel.getMySentieriEnogastronomici().observe(this, new Observer<ArrayList<SentieriPanoramici>>() {
-            @Override
-            public void onChanged(ArrayList<SentieriPanoramici> sentieriPanoramicis) {
-                for(SentieriPanoramici sp : sentieriPanoramicis){
-                    Log.d("sentieri enogastronomici", sp.Titolo);
-                }
+                RW.setAdapter(new AlberghiAdapter(a, soloAlberghi));
             }
         });
     }

@@ -36,42 +36,30 @@ public class SentieriAdapter extends RecyclerView.Adapter<SentieriViewHolder> {
         String dirtyTextTitle=listaSentieri.get(position).Titolo.replace("?","'");
         String dirtyTextSintesi=listaSentieri.get(position).Sintesi.replace("?","'");
         String dirtyTextZona=listaSentieri.get(position).PuntoDiPartenza;
-        try{
-            byte[] bytes= dirtyTextTitle.getBytes("Windows-1252");
-            String cleanTitle=new String(bytes,"Windows-1252" );
-            holder.titolo.setText(cleanTitle);
-        }catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-        }
+
+        String cleanTitle=Utili.formattaTesto(dirtyTextTitle);
+        holder.titolo.setText(cleanTitle);
 
         //in questo blocco cerco di prendere una frase e tenere la prima in maiuscolo e il resto minuscolo ma crasha l'emulatore
         /*String inizio=dirtyTextSintesi.substring(0,1);
         String fine=dirtyTextSintesi.substring(1);
         fine=fine.toLowerCase();
         dirtyTextSintesi=inizio+fine;*/
-
         String cleanSintesi=Utili.formattaTesto(dirtyTextSintesi);
         cleanSintesi=cleanSintesi.toLowerCase();
         if(!cleanSintesi.isEmpty()){
             holder.sintesi.setVisibility(View.VISIBLE);
             holder.sintesi.setTypeface(holder.sintesi.getTypeface(), Typeface.ITALIC);
-            holder.sintesi.setText(cleanSintesi.split("\\.")[0]);
+            holder.sintesi.setText(cleanSintesi.split("\\.")[0]);//prendo solo la prima frase, alcune sintesi erano troppo lunghe
         }else{
             holder.sintesi.setVisibility(View.GONE);
         }
-        try{
-            byte[] bytes= dirtyTextZona.getBytes("Windows-1252");
-            String cleanZona=new String(bytes,"Windows-1252" );
-            //altra roba strana perche quando dovrebbe essere vuoto mi mette il testo del primo elemento della lista
-            //SISTEMATO MA TENGO PERCHE E' PAZZIA
-            if(!cleanZona.isEmpty()){
-                holder.zona.setVisibility(View.VISIBLE);
-                holder.zona.setText(cleanZona);
-            }else{
-                holder.zona.setVisibility(View.GONE);
-            }
-        }catch (UnsupportedEncodingException e){
-            e.printStackTrace();
+        String cleanZona=Utili.formattaTesto(dirtyTextZona);
+        if(!cleanZona.isEmpty()){
+            holder.zona.setVisibility(View.VISIBLE);
+            holder.zona.setText(cleanZona);
+        }else{
+            holder.zona.setVisibility(View.GONE);
         }
     }
 

@@ -19,18 +19,22 @@
         android:orientation="horizontal"
         android:id="@+id/titolo">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="4"
             android:layout_height="wrap_content"
             android:id="@+id/denominazione"
             android:textColor="@color/white"
             android:text="Denominazione"
+            android:layout_gravity="left"
             android:textSize="18dp"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/stelle"
             android:textColor="@color/white"
             android:text="Stelle"
+            android:layout_gravity="right"
             android:layout_marginLeft="5dp"
             android:textSize="16dp"/>
     </LinearLayout>
