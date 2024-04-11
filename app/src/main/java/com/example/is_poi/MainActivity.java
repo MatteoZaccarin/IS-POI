@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.is_poi.databinding.ActivityMainBinding;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /*messo la lista dei POI nel menù a tendina*/
+        Log.d("encoding",System.getProperty("file.encoding"));
+
         String[] s=getResources().getStringArray(R.array.poi_type);
         ArrayAdapter<String> arrayApp=new ArrayAdapter<String>(binding.getRoot().getContext(), R.layout.dropdown_item, s);
         binding.autoCompleteTextView2.setAdapter(arrayApp);
