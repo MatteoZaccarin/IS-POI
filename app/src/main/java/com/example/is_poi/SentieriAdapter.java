@@ -38,14 +38,14 @@ public class SentieriAdapter extends RecyclerView.Adapter<SentieriViewHolder> {
         String dirtyTextZona=listaSentieri.get(position).PuntoDiPartenza;
 
         String cleanTitle=Utili.formattaTesto(dirtyTextTitle);
-        holder.titolo.setText(cleanTitle);
+        holder.titolo.setText(dirtyTextTitle);
 
         //in questo blocco cerco di prendere una frase e tenere la prima in maiuscolo e il resto minuscolo ma crasha l'emulatore
         /*String inizio=dirtyTextSintesi.substring(0,1);
         String fine=dirtyTextSintesi.substring(1);
         fine=fine.toLowerCase();
         dirtyTextSintesi=inizio+fine;*/
-        String cleanSintesi=Utili.formattaTesto(dirtyTextSintesi);
+        /*String cleanSintesi=Utili.formattaTesto(dirtyTextSintesi);
         cleanSintesi=cleanSintesi.toLowerCase();
         if(!cleanSintesi.isEmpty()){
             holder.sintesi.setVisibility(View.VISIBLE);
@@ -60,7 +60,7 @@ public class SentieriAdapter extends RecyclerView.Adapter<SentieriViewHolder> {
             holder.zona.setText(cleanZona);
         }else{
             holder.zona.setVisibility(View.GONE);
-        }
+        }*/
     }
 
     @Override

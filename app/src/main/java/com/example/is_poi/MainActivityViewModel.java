@@ -7,11 +7,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -130,7 +138,16 @@ public class MainActivityViewModel extends ViewModel {
     public void fetchSentieri(){
         ArrayList<SentieriPanoramici> array=new ArrayList<>();
         if(mySentieriPanoramici==null){
-            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
             Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
             ContentActivity.RequestSentieri request = retrofit.create(ContentActivity.RequestSentieri.class);
 
@@ -167,6 +184,7 @@ public class MainActivityViewModel extends ViewModel {
     public void fetchAlberghi(){
         if(myStrutture==null){
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+
             Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
             ContentActivity.RequestAlberghi request = retrofit.create(ContentActivity.RequestAlberghi.class);
             Log.d("send","request API alberghi");
