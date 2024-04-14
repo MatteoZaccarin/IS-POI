@@ -33,34 +33,30 @@ public class SentieriAdapter extends RecyclerView.Adapter<SentieriViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull SentieriViewHolder holder, int position) {
         holder.icon.setImageResource(listaSentieri.get(position).image);
-        String dirtyTextTitle=listaSentieri.get(position).Titolo.replace("?","'");
-        String dirtyTextSintesi=listaSentieri.get(position).Sintesi.replace("?","'");
-        String dirtyTextZona=listaSentieri.get(position).PuntoDiPartenza;
+        holder.titolo.setText(listaSentieri.get(position).Titolo.replace("?","'"));
 
-        String cleanTitle=Utili.formattaTesto(dirtyTextTitle);
-        holder.titolo.setText(dirtyTextTitle);
+        String dirtyTextSintesi=listaSentieri.get(position).Sintesi.replace("?","'").toLowerCase();
+        if(!dirtyTextSintesi.isEmpty()){
+            holder.sintesi.setVisibility(View.VISIBLE);
+            holder.sintesi.setTypeface(holder.sintesi.getTypeface(), Typeface.ITALIC);
+            holder.sintesi.setText(dirtyTextSintesi.split("\\.")[0]);//prendo solo la prima frase, alcune sintesi erano troppo lunghe
+        }else{
+            holder.sintesi.setVisibility(View.GONE);
+        }
+
+        String zona=listaSentieri.get(position).PuntoDiPartenza.replace("?","'");
+        if(!zona.isEmpty()){
+            holder.zona.setVisibility(View.VISIBLE);
+            holder.zona.setText(zona);
+        }else{
+            holder.zona.setVisibility(View.GONE);
+        }
 
         //in questo blocco cerco di prendere una frase e tenere la prima in maiuscolo e il resto minuscolo ma crasha l'emulatore
         /*String inizio=dirtyTextSintesi.substring(0,1);
         String fine=dirtyTextSintesi.substring(1);
         fine=fine.toLowerCase();
         dirtyTextSintesi=inizio+fine;*/
-        /*String cleanSintesi=Utili.formattaTesto(dirtyTextSintesi);
-        cleanSintesi=cleanSintesi.toLowerCase();
-        if(!cleanSintesi.isEmpty()){
-            holder.sintesi.setVisibility(View.VISIBLE);
-            holder.sintesi.setTypeface(holder.sintesi.getTypeface(), Typeface.ITALIC);
-            holder.sintesi.setText(cleanSintesi.split("\\.")[0]);//prendo solo la prima frase, alcune sintesi erano troppo lunghe
-        }else{
-            holder.sintesi.setVisibility(View.GONE);
-        }
-        String cleanZona=Utili.formattaTesto(dirtyTextZona);
-        if(!cleanZona.isEmpty()){
-            holder.zona.setVisibility(View.VISIBLE);
-            holder.zona.setText(cleanZona);
-        }else{
-            holder.zona.setVisibility(View.GONE);
-        }*/
     }
 
     @Override

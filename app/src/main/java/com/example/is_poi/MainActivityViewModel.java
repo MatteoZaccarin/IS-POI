@@ -117,7 +117,16 @@ public class MainActivityViewModel extends ViewModel {
 
     public void fetchPisteDaSci(){
         if(myEsperienze_PisteSci==null){
-            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
             Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
             ContentActivity.RequestPisteSci request = retrofit.create(ContentActivity.RequestPisteSci.class);
 
@@ -162,7 +171,16 @@ public class MainActivityViewModel extends ViewModel {
                 }
             });
 
-            OkHttpClient.Builder httpClient1 = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+            OkHttpClient.Builder httpClient1 = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
             Retrofit retrofit1 = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
             ContentActivity.RequestSentieriEnogastronomici request1 = retrofit.create(ContentActivity.RequestSentieriEnogastronomici.class);
 
@@ -183,7 +201,16 @@ public class MainActivityViewModel extends ViewModel {
 
     public void fetchAlberghi(){
         if(myStrutture==null){
-            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
 
             Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
             ContentActivity.RequestAlberghi request = retrofit.create(ContentActivity.RequestAlberghi.class);
@@ -205,7 +232,16 @@ public class MainActivityViewModel extends ViewModel {
     }
     public void fetchPisteCiclabili(){
         if(myRoadBike==null){
-            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
             Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
             ContentActivity.RequestRoadBike request = retrofit.create(ContentActivity.RequestRoadBike.class);
 
@@ -223,7 +259,16 @@ public class MainActivityViewModel extends ViewModel {
         }
 
         if(myMountainBike==null){
-            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
             Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
             ContentActivity.RequestMountainBike request1 = retrofit.create(ContentActivity.RequestMountainBike.class);
             request1.getMountainBike().enqueue(new Callback<ArrayList<Esperienze>>() {
@@ -240,7 +285,16 @@ public class MainActivityViewModel extends ViewModel {
         }
 
         if(myPisteCiclabili==null){
-            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
             Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
             ContentActivity.RequestPisteCiclabili request1 = retrofit.create(ContentActivity.RequestPisteCiclabili.class);
             request1.getPisteCiclabili().enqueue(new Callback<ArrayList<Esperienze>>() {

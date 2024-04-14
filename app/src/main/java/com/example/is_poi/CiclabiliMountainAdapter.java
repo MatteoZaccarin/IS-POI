@@ -30,9 +30,7 @@ public class CiclabiliMountainAdapter extends RecyclerView.Adapter<CiclabiliView
     public void onBindViewHolder(@NonNull CiclabiliViewHolder holder, int position) {
         holder.icon.setImageResource(listaCiclabiliMountain.get(position).image);
         holder.titolo.setText(listaCiclabiliMountain.get(position).Titolo.replace("?","'"));
-
-        String cleanText=Utili.formattaTesto(listaCiclabiliMountain.get(position).Sintesi.split("\\.")[0]);
-        holder.sintesi.setText(cleanText.replace("?","'"));
+        holder.sintesi.setText(listaCiclabiliMountain.get(position).Sintesi.split("\\.")[0].replace("?","'"));
 
         holder.categoria.setText("Categoria: "+listaCiclabiliMountain.get(position).Categoria);
         if(listaCiclabiliMountain.get(position).Categoria!="Piste Ciclabili"){

@@ -1,18 +1,26 @@
 package com.example.is_poi;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.is_poi.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
@@ -22,6 +30,9 @@ import retrofit2.http.GET;
 
 
 public class ContentActivity extends AppCompatActivity {
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +41,6 @@ public class ContentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String poi_type = intent.getStringExtra("poi_type");
         Log.d("Arrivato", poi_type);
-
 
         setTypeOfPOI(poi_type, this);
     }

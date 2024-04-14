@@ -37,9 +37,9 @@ public class AlberghiAdapter extends RecyclerView.Adapter<AlberghiViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull AlberghiViewHolder holder, int position) {
         holder.icon.setImageResource(listaAlberghi.get(position).icon);
-        holder.denominazione.setText(Utili.formattaTesto(listaAlberghi.get(position).DENOMINAZIONE));
+        holder.denominazione.setText(listaAlberghi.get(position).DENOMINAZIONE);
         holder.stelle.setText(listaAlberghi.get(position).STELLE);
-        holder.indirizzo.setText(Utili.formattaTesto(listaAlberghi.get(position).INDIRIZZO+" "+listaAlberghi.get(position).CIVICO+" - "+listaAlberghi.get(position).COMUNE.toLowerCase()));
+        holder.indirizzo.setText(listaAlberghi.get(position).INDIRIZZO+" "+listaAlberghi.get(position).CIVICO+" - "+listaAlberghi.get(position).COMUNE.toLowerCase());
         if(!listaAlberghi.get(position).EMAIL.isEmpty() && !listaAlberghi.get(position).TELEFONO.isEmpty()){
             holder.recapito.setText("Recapiti: \n\t\t"+listaAlberghi.get(position).EMAIL+" \n\t\t"+listaAlberghi.get(position).TELEFONO);
         }else{
@@ -51,7 +51,7 @@ public class AlberghiAdapter extends RecyclerView.Adapter<AlberghiViewHolder> {
 
         if(listaAlberghi.get(position).SITOWEB.isEmpty()){
             holder.sito.setVisibility(View.GONE);
-            holder.sito.setText("Sito web non presente per questo "+ listaAlberghi.get(position).TIPOLOGIA.toLowerCase());
+            //holder.sito.setText("Sito web non presente per questo "+ listaAlberghi.get(position).TIPOLOGIA.toLowerCase());
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.recapito.getLayoutParams();
             params.removeRule(RelativeLayout.BELOW);
             params.addRule(RelativeLayout.BELOW, R.id.imageview);
