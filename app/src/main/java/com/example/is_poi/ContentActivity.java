@@ -30,14 +30,9 @@ import retrofit2.http.GET;
 
 
 public class ContentActivity extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
-    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content_poi);
-
         Intent intent = getIntent();
         String poi_type = intent.getStringExtra("poi_type");
         Log.d("Arrivato", poi_type);
