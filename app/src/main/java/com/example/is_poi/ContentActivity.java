@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.is_poi.databinding.ActivityContentPoiBinding;
 import com.example.is_poi.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -30,14 +31,20 @@ import retrofit2.http.GET;
 
 
 public class ContentActivity extends AppCompatActivity {
+    private ActivityContentPoiBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         String poi_type = intent.getStringExtra("poi_type");
-        Log.d("Arrivato", poi_type);
-
+        binding = ActivityContentPoiBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        binding.toolbar.setNavigationOnClickListener(view ->
+                binding.drawerLayout.openDrawer(GravityCompat.START)
+        );
+        binding.toolbar.setTitle(poi_type);
         setTypeOfPOI(poi_type, this);
+
     }
 
     private void setTypeOfPOI(String value, Activity a){
@@ -101,7 +108,6 @@ public class ContentActivity extends AppCompatActivity {
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
                 RW.setAdapter(new SciAdapter(a, esperienzes));
-
             }
         });
     }

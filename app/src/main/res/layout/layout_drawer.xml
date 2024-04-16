@@ -3,15 +3,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="?android:attr/colorBackground"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
     android:layout_gravity="start">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Benvenuto Utente XYZ"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/row"
+        app:layout_constraintTop_toBottomOf="@+id/user"
+        android:background="@color/white"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/row"
+        android:id="@+id/eventi"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="50dp"
+        android:background="@drawable/menu_area"
+        android:text="I miei eventi"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/eventi"
+        android:paddingTop="20dp"
+        android:id="@+id/prova1"
+        android:paddingBottom="20dp"
+        android:paddingLeft="50dp"
+        android:background="@drawable/menu_area"
+        android:text="XYZ"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/prova1"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="50dp"
+        android:background="@drawable/menu_area"
+        android:text="XYZ"/>
+
+    <Button
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ciao"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="LOGOUT"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:drawableLeft="@drawable/baseline_logout_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
