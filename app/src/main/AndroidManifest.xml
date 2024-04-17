@@ -18,6 +18,9 @@
             android:name=".ContentActivity"
             android:exported="false" />
         <activity
+            android:name=".EventiActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchCity"
             android:exported="false" />
         <activity

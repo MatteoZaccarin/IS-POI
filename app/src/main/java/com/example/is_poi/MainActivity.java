@@ -41,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         setContentView(binding.getRoot());
-
         viewModel.fetchMunicipallyData();
-
         manageViews(this);
         initObservers();
     }
@@ -94,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, ContentActivity.class);
                 intent.putExtra("poi_type", poi);
                 startActivity(intent);
-                /*mi basta capire come passare sto valore dall'altra parte e sopratutto se devo metterlo dentro a queste view*/
             }
         });
 

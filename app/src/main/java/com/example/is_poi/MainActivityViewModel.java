@@ -147,6 +147,31 @@ public class MainActivityViewModel extends ViewModel {
     public void fetchSentieri(){
         ArrayList<SentieriPanoramici> array=new ArrayList<>();
         if(mySentieriPanoramici==null){
+            OkHttpClient.Builder httpClient1 = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
+            Retrofit retrofit1 = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient1.build()).build();
+            ContentActivity.RequestSentieriEnogastronomici request1 = retrofit1.create(ContentActivity.RequestSentieriEnogastronomici.class);
+
+            request1.getSentieriEnogastronomici().enqueue(new Callback<ArrayList<SentieriPanoramici>>() {
+                @Override
+                public void onResponse(Call<ArrayList<SentieriPanoramici>> call, Response<ArrayList<SentieriPanoramici>> response) {
+                    array.addAll(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<SentieriPanoramici>> call, Throwable t) {
+                    Log.e("error", "chiamata API Sentieri Enogastronomici");
+                }
+            });
+
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
                     .addInterceptor(new Interceptor() {
                         @Override
@@ -164,36 +189,11 @@ public class MainActivityViewModel extends ViewModel {
                 @Override
                 public void onResponse(Call<ArrayList<SentieriPanoramici>> call, Response<ArrayList<SentieriPanoramici>> response) {
                     array.addAll(response.body());
+                    MainActivityViewModel.this.mySentieriPanoramici.setValue(array);
                 }
                 @Override
                 public void onFailure(Call<ArrayList<SentieriPanoramici>> call, Throwable t) {
                     Log.e("error", "chiamata API sentieri storici");
-                }
-            });
-
-            OkHttpClient.Builder httpClient1 = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
-                    .addInterceptor(new Interceptor() {
-                        @Override
-                        public okhttp3.Response intercept(Chain chain) throws IOException {
-                            okhttp3.Response originalResponse = chain.proceed(chain.request());
-                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
-                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
-                            return originalResponse.newBuilder().body(modifiedBody).build();
-                        }
-                    });
-            Retrofit retrofit1 = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
-            ContentActivity.RequestSentieriEnogastronomici request1 = retrofit.create(ContentActivity.RequestSentieriEnogastronomici.class);
-
-            request1.getSentieriEnogastronomici().enqueue(new Callback<ArrayList<SentieriPanoramici>>() {
-                @Override
-                public void onResponse(Call<ArrayList<SentieriPanoramici>> call, Response<ArrayList<SentieriPanoramici>> response) {
-                    array.addAll(response.body());
-                    MainActivityViewModel.this.mySentieriPanoramici.setValue(array);
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<SentieriPanoramici>> call, Throwable t) {
-                    Log.e("error", "chiamata API Sentieri Enogastronomici");
                 }
             });
         }

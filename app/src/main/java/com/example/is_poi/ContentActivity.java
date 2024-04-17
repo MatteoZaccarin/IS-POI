@@ -2,10 +2,13 @@ package com.example.is_poi;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -35,16 +38,45 @@ public class ContentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Intent intent = getIntent();
         String poi_type = intent.getStringExtra("poi_type");
+
         binding = ActivityContentPoiBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(view ->
                 binding.drawerLayout.openDrawer(GravityCompat.START)
         );
         binding.toolbar.setTitle(poi_type);
-        setTypeOfPOI(poi_type, this);
 
+        setTypeOfPOI(poi_type, this);
+        setLeftMenu(this);
+    }
+
+    private void setLeftMenu(Context context){
+        TextView eventi=findViewById(R.id.eventi);
+        TextView prova1=findViewById(R.id.prova1);
+        Button logout=findViewById(R.id.logout);
+
+        eventi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EventiActivity.class);
+                startActivity(intent);
+            }
+        });
+        prova1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("prova1","AAAAAAAAAAAAAAAAAAAAAAA");
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("LOGOUT", "AAAAAAAAAAAAAA");
+            }
+        });
     }
 
     private void setTypeOfPOI(String value, Activity a){
