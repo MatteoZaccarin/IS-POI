@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.is_poi.databinding.ActivityContentPoiBinding;
 import com.example.is_poi.databinding.ActivityMainBinding;
@@ -35,22 +36,35 @@ import retrofit2.http.GET;
 
 public class ContentActivity extends AppCompatActivity {
     private ActivityContentPoiBinding binding;
+    String poi_type;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    Activity myActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        String poi_type = intent.getStringExtra("poi_type");
+        poi_type = intent.getStringExtra("poi_type");
 
+        myActivity=this;
         binding = ActivityContentPoiBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(view ->
                 binding.drawerLayout.openDrawer(GravityCompat.START)
         );
         binding.toolbar.setTitle(poi_type);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         setTypeOfPOI(poi_type, this);
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         setLeftMenu(this);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setTypeOfPOI(poi_type, myActivity);
+            }
+        });
     }
 
     private void setLeftMenu(Context context){
@@ -102,12 +116,12 @@ public class ContentActivity extends AppCompatActivity {
                 getListAgriturismo(a);
                 break;
         }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void getListAgriturismo(Activity a) {
         viewModel = MainActivity.viewModel;
         viewModel.fetchAlberghi();
-
         viewModel.getMyStrutture().observe(this, new Observer<ArrayList<Alberghi>>() {
             @Override
             public void onChanged(ArrayList<Alberghi> alberghis) {
@@ -121,6 +135,7 @@ public class ContentActivity extends AppCompatActivity {
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
                 RW.setAdapter(new AlberghiAdapter(a, soloAgriturismi));
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });
     }
@@ -140,6 +155,7 @@ public class ContentActivity extends AppCompatActivity {
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
                 RW.setAdapter(new SciAdapter(a, esperienzes));
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });
     }
@@ -182,6 +198,7 @@ public class ContentActivity extends AppCompatActivity {
                 }
                 espContainer.addAll(esperienzes);
                 RW.setAdapter(new CiclabiliMountainAdapter(a,espContainer));
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });
 
@@ -211,13 +228,13 @@ public class ContentActivity extends AppCompatActivity {
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
                 RW.setAdapter(new SentieriAdapter(a, sentieriPanoramicis));
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });
     }
     private void getListAlberghi(Activity a){
         viewModel =MainActivity.viewModel;
         viewModel.fetchAlberghi();
-
         viewModel.getMyStrutture().observe(this, new Observer<ArrayList<Alberghi>>() {
             @Override
             public void onChanged(ArrayList<Alberghi> alberghis) {
@@ -231,6 +248,7 @@ public class ContentActivity extends AppCompatActivity {
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(ContentActivity.this));
                 RW.setAdapter(new AlberghiAdapter(a, soloAlberghi));
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });
     }
@@ -264,4 +282,7 @@ public class ContentActivity extends AppCompatActivity {
         @GET("export/json/Percorsi-Ciclabili-Panoramici-nel-Veneto.json")
         Call<ArrayList<Esperienze>> getPisteCiclabili();
     }
+
+
+
 }
