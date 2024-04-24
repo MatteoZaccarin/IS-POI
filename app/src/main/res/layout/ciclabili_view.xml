@@ -7,13 +7,13 @@
     android:layout_marginRight="10dp"
     android:background="@drawable/box_area">
     <ImageView
-        android:layout_width="50dp"
+        android:layout_width="55dp"
         android:layout_height="50dp"
         android:id="@+id/imageview"
         android:layout_marginTop="5dp"
         android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="2dp"/>
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,19 +34,21 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Sintesi"
-        android:layout_below="@id/Categoria"
-        android:layout_toEndOf="@+id/imageview"
-        android:textColor="@color/grey"
-        android:text="Sintesi"
-        android:textSize="14dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/Zona"
-        android:layout_below="@id/Sintesi"
+        android:layout_below="@id/Categoria"
         android:layout_toEndOf="@+id/imageview"
         android:textColor="@color/white"
         android:text="Zona"
         android:textSize="14dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Sintesi"
+        android:layout_below="@id/Zona"
+        android:layout_toEndOf="@+id/imageview"
+        android:textColor="@color/grey"
+        android:text="Sintesi"
+        android:textStyle="italic"
+        android:textSize="14dp"/>
+
 </RelativeLayout>

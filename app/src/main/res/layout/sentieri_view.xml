@@ -4,15 +4,16 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:layout_marginLeft="10dp"
+    android:minHeight="70dp"
     android:layout_marginRight="10dp"
     android:background="@drawable/box_area">
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/imageview"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="7dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="2dp"/>
+        android:layout_marginLeft="3dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,19 +25,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Sintesi"
+        android:id="@+id/Zona"
         android:layout_below="@id/Titolo"
         android:layout_toEndOf="@+id/imageview"
-        android:textColor="@color/grey"
+        android:textColor="@color/white"
         android:visibility="gone"
         android:textSize="14dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Zona"
-        android:layout_below="@id/Sintesi"
+        android:id="@+id/Sintesi"
+        android:layout_below="@id/Zona"
         android:layout_toEndOf="@+id/imageview"
-        android:textColor="@color/white"
+        android:textColor="@color/grey"
         android:visibility="gone"
         android:textSize="14dp"/>
 </RelativeLayout>

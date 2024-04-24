@@ -36,6 +36,9 @@ public class AlberghiAdapter extends RecyclerView.Adapter<AlberghiViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull AlberghiViewHolder holder, int position) {
+        if(listaAlberghi.get(position).TIPOLOGIA.compareTo("AGRITURISMO")==0){
+            holder.stelle.setVisibility(View.GONE);
+        }
         holder.icon.setImageResource(listaAlberghi.get(position).icon);
         holder.denominazione.setText(listaAlberghi.get(position).DENOMINAZIONE);
         holder.stelle.setText(listaAlberghi.get(position).STELLE);
