@@ -69,8 +69,8 @@ public class ContentActivity extends AppCompatActivity {
 
     private void setLeftMenu(Context context){
         TextView eventi=findViewById(R.id.eventi);
-        TextView prova1=findViewById(R.id.prova1);
-        Button logout=findViewById(R.id.logout);
+        TextView profilo=findViewById(R.id.profilo);
+        TextView logout=findViewById(R.id.logout);
 
         eventi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,10 +79,11 @@ public class ContentActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        prova1.setOnClickListener(new View.OnClickListener() {
+        profilo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("prova1","AAAAAAAAAAAAAAAAAAAAAAA");
+                Intent intent = new Intent(context, ProfiloActivity.class);
+                startActivity(intent);
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

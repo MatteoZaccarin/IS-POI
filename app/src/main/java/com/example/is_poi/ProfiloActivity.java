@@ -4,22 +4,21 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 
 import com.example.is_poi.databinding.ActivityEventiBinding;
+import com.example.is_poi.databinding.ActivityProfiloBinding;
 
-
-public class EventiActivity extends AppCompatActivity {
-    private ActivityEventiBinding binding;
+public class ProfiloActivity extends AppCompatActivity {
+    private ActivityProfiloBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityEventiBinding.inflate(getLayoutInflater());
+        binding= ActivityProfiloBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+                finish();
             }
         });
 

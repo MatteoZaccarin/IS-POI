@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.is_poi.databinding.ActivityMainBinding;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         viewModel.fetchMunicipallyData();
         manageViews(this);
+        setLeftMenu(this);
         initObservers();
     }
 
@@ -58,6 +60,33 @@ public class MainActivity extends AppCompatActivity {
                     uiState.ritornaStringheComuni()
                 );
                 binding.autoCompleteTextView.setAdapter(adapter);
+            }
+        });
+    }
+
+    private void setLeftMenu(Context context){
+        TextView eventi=findViewById(R.id.eventi);
+        TextView profilo=findViewById(R.id.profilo);
+        TextView logout=findViewById(R.id.logout);
+
+        eventi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EventiActivity.class);
+                startActivity(intent);
+            }
+        });
+        profilo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProfiloActivity.class);
+                startActivity(intent);
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("LOGOUT", "AAAAAAAAAAAAAA");
             }
         });
     }
