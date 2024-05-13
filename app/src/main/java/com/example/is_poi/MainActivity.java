@@ -103,10 +103,8 @@ public class MainActivity extends AppCompatActivity {
         binding.autoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
             String selected = (String) adapterView.getItemAtPosition(i);
             Intent intent=new Intent(getApplicationContext(), SearchCity.class);
-            startActivity(intent);
             intent.putExtra("comune",selected);
-            Bundle b=new Bundle();
-            //intent.putExtra("alberghi",viewModel.getUiState());
+            startActivity(intent);
             finish();
         });
 
