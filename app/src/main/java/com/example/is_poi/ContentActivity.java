@@ -53,6 +53,7 @@ public class ContentActivity extends AppCompatActivity {
                 binding.drawerLayout.openDrawer(GravityCompat.START)
         );
         binding.toolbar.setTitle(poi_type);
+        binding.leftMenu.name.setText("Benvenuto "+FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         setTypeOfPOI(poi_type, this);

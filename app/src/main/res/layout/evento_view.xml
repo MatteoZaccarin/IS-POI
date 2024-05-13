@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/box_area">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nomeEvento"
+        android:textColor="@color/white"
+        android:text="Nome Evento"
+        android:layout_gravity="left"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="22dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/indirizzo"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/nomeEvento"
+        android:textColor="@color/white"
+        android:text="Indirizzo"
+        android:textSize="18dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/date"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/indirizzo"
+        android:textColor="@color/white"
+        android:text="Date"
+        android:textSize="18dp"/>
+    <View
+        android:layout_centerHorizontal="true"
+        android:layout_width="250dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:layout_below="@+id/date" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/descrizione"
+        android:layout_below="@+id/date"
+        android:textColor="@color/grey"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="3dp"
+        android:textStyle="italic"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="5dp"
+        android:text="Descrizione"
+        android:textSize="16dp"/>
+</RelativeLayout>

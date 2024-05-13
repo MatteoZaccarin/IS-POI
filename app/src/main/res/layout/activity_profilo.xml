@@ -87,7 +87,7 @@
             android:inputType="none"
             android:focusable="false"
             android:drawableLeft="@drawable/baseline_event_24"
-            android:text="5 attivi e 2 passati"
+            android:text="                               "
             android:textSize="21dp"
             android:layout_marginLeft="10dp"
             android:textStyle="bold"/>
