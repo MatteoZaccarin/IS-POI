@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(view ->
             binding.drawer.openDrawer(GravityCompat.START)
         );
+        binding.leftMenu.name.setText("Benvenuto "+FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]);
         binding.autoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
             String selected = (String) adapterView.getItemAtPosition(i);
             Intent intent=new Intent(getApplicationContext(), SearchCity.class);

@@ -14,7 +14,7 @@ public class AlberghiViewHolder extends RecyclerView.ViewHolder {
 
     public AlberghiViewHolder(@NonNull View itemView) {
         super(itemView);
-        icon=itemView.findViewById(R.id.imageview);//occhio ha lo stesso id forse fa merda
+        icon=itemView.findViewById(R.id.imageview);
         denominazione=itemView.findViewById(R.id.denominazione);
         stelle=itemView.findViewById(R.id.stelle);
         indirizzo=itemView.findViewById(R.id.indirizzo);
