@@ -14,6 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:titleTextColor="@color/white"
             android:navigationIcon="@drawable/baseline_arrow_back_24"
             android:title="I miei eventi"
             android:background="?android:attr/colorBackground"

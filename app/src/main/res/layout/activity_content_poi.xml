@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:navigationIcon="@drawable/ic_menu"
             android:title="POI"
+            android:titleTextColor="@color/white"
             android:background="?android:attr/colorBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
