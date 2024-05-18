@@ -27,6 +27,9 @@
             android:name=".SearchCity"
             android:exported="false" />
         <activity
+            android:name=".EventiModificaActivity"
+            android:exported="false"/>
+        <activity
             android:name=".DashboardActivity"
             android:exported="true" />
         <activity
