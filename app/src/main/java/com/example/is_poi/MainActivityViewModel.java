@@ -1,12 +1,22 @@
 package com.example.is_poi;
 
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -39,6 +49,14 @@ public class MainActivityViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Esperienze>> myRoadBike;
     public MutableLiveData<ArrayList<Esperienze>> myMountainBike;
     public MutableLiveData<ArrayList<Esperienze>> myPisteCiclabili;
+    public MutableLiveData<ArrayList<Evento>> myEventi;
+
+    public MutableLiveData<ArrayList<Evento>> getMyEventi(){
+        if(myEventi==null){
+            myEventi=new MutableLiveData<ArrayList<Evento>>();
+        }
+        return myEventi;
+    }
 
     public MutableLiveData<ArrayList<Alberghi>> getMyStrutture(){
         if(myStrutture==null){
@@ -312,7 +330,28 @@ public class MainActivityViewModel extends ViewModel {
                 }
             });
         }
+    }
+    public void fetchEventi(){
+        Query q  = FirebaseDatabase.getInstance("https://is-poi-default-rtdb.europe-west1.firebasedatabase.app").getReference("eventi").orderByKey();
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Evento> eventi=new ArrayList<>();
+                // Itera su ogni risultato della query
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    Evento e=childSnapshot.getValue(Evento.class);
+                    e.id=childSnapshot.getKey();
+                    if(e.Creatore.compareTo(FirebaseAuth.getInstance().getCurrentUser().getEmail())==0){
+                        eventi.add(e);
+                    }
+                }
+                myEventi.setValue(eventi);
+            }
 
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("errore interrogazione eventi firebase", error.getDetails());
+            }
+        });
     }
 }

@@ -60,7 +60,7 @@ public class EventiModificaActivity extends AppCompatActivity {
                 binding.comune.setText(e.Comune);
                 binding.civico.setText(e.Civico);
                 binding.descrizione.setText(e.Descrizione);
-                setAscoltatori();
+                setAscoltatori(id);
             }
 
             @Override
@@ -70,7 +70,7 @@ public class EventiModificaActivity extends AppCompatActivity {
             }
         });
     }
-    public void setAscoltatori(){
+    public void setAscoltatori(String id){
         //ascoltatore sulla data inizio
         binding.datainizio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +161,9 @@ public class EventiModificaActivity extends AppCompatActivity {
                 e.setCivico(binding.civico.getText().toString());
                 e.setCreatore(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 e.setDescrizione(binding.descrizione.getText().toString());
-                myRef.push().setValue(e);
+                //database.getReference("eventi").push().setValue(e); da cancellare
+                database.getReference("eventi/"+id).setValue(e);
+                MainActivity.viewModel.fetchEventi();
                 Toast.makeText(EventiModificaActivity.this, "L'evento è stato modificato con successo", Toast.LENGTH_SHORT).show();
                 finish();
             }
