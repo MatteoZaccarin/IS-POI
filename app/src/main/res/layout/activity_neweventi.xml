@@ -22,7 +22,7 @@
         android:ems="12"
         android:inputType="text"
         android:layout_marginTop="5dp"
-        android:text="Nome evento"
+        android:hint="Nome evento"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:ems="8"
             android:layout_marginBottom="10dp"
-            android:text="Data inizio"
+            android:hint="Data inizio"
             android:focusable="false"
             android:inputType="date"
             android:layout_marginRight="20dp"/>
@@ -54,7 +54,7 @@
             android:id="@+id/orainizio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ora inizio"
+            android:hint="Ora inizio"
             android:focusable="false"
             android:ems="6"
             android:inputType="time" />
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:ems="8"
             android:layout_marginBottom="10dp"
-            android:text="Data fine"
+            android:hint="Data fine"
             android:focusable="false"
             android:inputType="date"
             android:layout_marginRight="20dp"/>
@@ -87,7 +87,7 @@
             android:id="@+id/orafine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ora fine"
+            android:hint="Ora fine"
             android:focusable="false"
             android:ems="6"
             android:inputType="time"/>
@@ -106,21 +106,21 @@
             android:layout_height="wrap_content"
             android:ems="9"
             android:inputType="text"
-            android:text="Via" />
+            android:hint="Via" />
         <EditText
             android:id="@+id/civico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="3"
             android:inputType="numberDecimal"
-            android:text="n" />
+            android:hint="n" />
         <EditText
             android:id="@+id/comune"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="6"
             android:inputType="text"
-            android:text="Comune" />
+            android:hint="Comune" />
     </LinearLayout>
 
     <EditText
@@ -128,7 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="15"
-        android:text="Descrizione"
+        android:hint="Descrizione"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintTop_toBottomOf="@+id/indirizzo"
