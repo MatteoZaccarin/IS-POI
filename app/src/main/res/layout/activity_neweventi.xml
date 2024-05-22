@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:navigationIcon="@drawable/baseline_arrow_back_24"
+        android:title="Crea Evento"
+        android:titleTextColor="@color/white"
+        android:background="?android:attr/colorBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/nomeEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="12"
+        android:inputType="text"
+        android:layout_marginTop="5dp"
+        android:text="Nome evento"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dataorainizio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nomeEvento">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inizio:"
+            android:textSize="20dp"
+            android:layout_marginRight="15dp"/>
+        <EditText
+            android:id="@+id/datainizio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:layout_marginBottom="10dp"
+            android:text="Data inizio"
+            android:focusable="false"
+            android:inputType="date"
+            android:layout_marginRight="20dp"/>
+        <EditText
+            android:id="@+id/orainizio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ora inizio"
+            android:focusable="false"
+            android:ems="6"
+            android:inputType="time" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/dataorafine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dataorainizio">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fine:"
+            android:textSize="20dp"
+            android:layout_marginRight="15dp"/>
+        <EditText
+            android:id="@+id/datafine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:layout_marginBottom="10dp"
+            android:text="Data fine"
+            android:focusable="false"
+            android:inputType="date"
+            android:layout_marginRight="20dp"/>
+        <EditText
+            android:id="@+id/orafine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ora fine"
+            android:focusable="false"
+            android:ems="6"
+            android:inputType="time"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/indirizzo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dataorafine">
+        <EditText
+            android:id="@+id/via"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="9"
+            android:inputType="text"
+            android:text="Via" />
+        <EditText
+            android:id="@+id/civico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="3"
+            android:inputType="numberDecimal"
+            android:text="n" />
+        <EditText
+            android:id="@+id/comune"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="6"
+            android:inputType="text"
+            android:text="Comune" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/descrizione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="15"
+        android:text="Descrizione"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintTop_toBottomOf="@+id/indirizzo"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+        android:id="@+id/Invio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/descrizione"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:text="Crea evento" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

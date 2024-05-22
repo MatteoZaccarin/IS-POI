@@ -3,6 +3,7 @@ package com.example.is_poi;
 import java.time.LocalDateTime;
 
 public class Evento {
+    String id;
     String NomeEvento;
     String Indirizzo;
     String Civico;
@@ -36,8 +37,8 @@ public class Evento {
         int mese=Integer.parseInt(data.split("-")[1]);
         int anno=Integer.parseInt(data.split("-")[2]);
         int ora=Integer.parseInt(orario.split(":")[0]);
-        int minuto=Integer.parseInt(data.split("-")[1]);
-        LocalDateTime a=LocalDateTime.of(anno, mese, giorno, ora,minuto);
+        int minuto=Integer.parseInt(orario.split(":")[1]);
+        LocalDateTime a=LocalDateTime.of(anno, mese, giorno, ora, minuto);
         return a;
     }
 

@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 public class EventiActivity extends AppCompatActivity {
     private ActivityEventiBinding binding;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private MainActivityViewModel viewModel;
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://is-poi-default-rtdb.europe-west1.firebasedatabase.app");
     DatabaseReference myRef = database.getReference("eventi");
     @Override
@@ -46,36 +48,19 @@ public class EventiActivity extends AppCompatActivity {
             public void onRefresh() {printEventi();}
         });
         printEventi();
-
     }
 
     public void printEventi(){
-        Query q= myRef.orderByKey();
-        q.addListenerForSingleValueEvent(new ValueEventListener() {
+        viewModel = MainActivity.viewModel;
+        viewModel.fetchEventi();
+        viewModel.getMyEventi().observe(this, new Observer<ArrayList<Evento>>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Evento> eventi=new ArrayList<>();
-                // Itera su ogni risultato della query
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    Evento e=childSnapshot.getValue(Evento.class);
-                    System.out.println(e.Creatore);
-                    if(e.Creatore.compareTo(FirebaseAuth.getInstance().getCurrentUser().getEmail())==0){
-                        eventi.add(e);
-                    }
-                }
+            public void onChanged(ArrayList<Evento> eventi) {
                 RecyclerView RW =findViewById((R.id.recyclerview));
                 RW.setLayoutManager(new LinearLayoutManager(EventiActivity.this));
                 RW.setAdapter(new EventiAdapter(EventiActivity.this, eventi));
                 findViewById(R.id.progressBar).setVisibility(View.GONE);
-                System.out.println(eventi.size());
-
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("errore interrogazione eventi firebase", error.getDetails());
-            }
-
         });
         swipeRefreshLayout.setRefreshing(false);
     }

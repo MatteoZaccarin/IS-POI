@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
@@ -41,17 +42,53 @@
         android:layout_marginTop="5dp"
         android:background="@color/white"
         android:layout_below="@+id/date" />
-    <TextView
-        android:layout_width="match_parent"
+        <TextView
+            android:layout_height="wrap_content"
+            android:id="@+id/descrizione"
+            android:layout_below="@+id/date"
+            android:textColor="@color/grey"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="italic"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Descrizione"
+            android:textSize="16dp"
+            android:layout_width="match_parent"/>
+    <ImageButton
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
         android:layout_height="wrap_content"
-        android:id="@+id/descrizione"
-        android:layout_below="@+id/date"
-        android:textColor="@color/grey"
+        app:srcCompat="@drawable/baseline_clear_24"
+        android:layout_alignParentRight="true"/>
+    <View
+        android:layout_centerHorizontal="true"
+        android:layout_width="250dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:layout_below="@+id/descrizione" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/id"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/modify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/baseline_mode_24"
+        android:layout_below="@id/descrizione"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:textStyle="bold"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="3dp"
-        android:textStyle="italic"
-        android:layout_marginRight="3dp"
-        android:layout_marginBottom="5dp"
-        android:text="Descrizione"
-        android:textSize="16dp"/>
+        android:layout_centerHorizontal="true"
+        android:text="Modifica" />
+
 </RelativeLayout>

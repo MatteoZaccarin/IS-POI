@@ -21,7 +21,7 @@ public class EventiAdapter extends RecyclerView.Adapter<EventoViewHolder> {
     @NonNull
     @Override
     public EventoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new EventoViewHolder(LayoutInflater.from(context).inflate(R.layout.evento_view,parent,false));
+        return new EventoViewHolder(LayoutInflater.from(context).inflate(R.layout.evento_view,parent,false), this.context);
     }
 
     @Override
@@ -30,6 +30,7 @@ public class EventiAdapter extends RecyclerView.Adapter<EventoViewHolder> {
         holder.Indirizzo.setText("Luogo: "+listaEventi.get(position).Indirizzo+" n "+listaEventi.get(position).Civico+" - "+listaEventi.get(position).Comune+" ("+listaEventi.get(position).Provincia+")");
         holder.Date.setText("Inizio: "+listaEventi.get(position).DataOraInizio+"\nFine: "+ listaEventi.get(position).DataOraFine);
         holder.Descrizione.setText(listaEventi.get(position).Descrizione);
+        holder.Id.setText(listaEventi.get(position).id);
     }
 
     @Override

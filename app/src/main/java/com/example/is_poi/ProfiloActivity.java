@@ -46,10 +46,10 @@ public class ProfiloActivity extends AppCompatActivity {
                 finish();
             }
         });
-        Evento festaGrande=new Evento("partita calcio a 5", "via napoleone", "18", "Auronzo", "fabio@gmail.com", Evento.dateToString(LocalDateTime.now().minusDays(5)), Evento.dateToString(LocalDateTime.now().minusDays(2)), "Divertimento e giochiamo assieme"
+        /*Evento festaGrande=new Evento("partita calcio a 5", "via napoleone", "18", "Auronzo", "fabio@gmail.com", Evento.dateToString(LocalDateTime.now().minusDays(5)), Evento.dateToString(LocalDateTime.now().minusDays(2)), "Divertimento e giochiamo assieme"
                 , "Belluno");
         myRef.child("festagrande3").setValue(festaGrande);
-        LocalDateTime a=Evento.stringToDate(festaGrande.DataOraInizio);
+        LocalDateTime a=Evento.stringToDate(festaGrande.DataOraInizio);*/
         numEventi();
     }
     public String numEventi(){
