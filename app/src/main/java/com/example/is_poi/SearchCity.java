@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.is_poi.databinding.ActivityEventiBinding;
 import com.example.is_poi.databinding.ActivitySearchCityBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +43,7 @@ public class SearchCity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(view ->
                 binding.drawer.openDrawer(GravityCompat.START)
         );
+        binding.leftMenu.name.setText("Benvenuto "+FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]);
         viewmodel=MainActivity.viewModel;
         getAlberghi(this);
         getAgriturismo(this);
@@ -49,6 +52,45 @@ public class SearchCity extends AppCompatActivity {
         getPisteCiclabili(this);
 
 
+    private void setLeftMenu(Context context){
+        TextView eventi=findViewById(R.id.eventi);
+        TextView profilo=findViewById(R.id.profilo);
+        TextView logout=findViewById(R.id.logout);
+
+        eventi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EventiActivity.class);
+                startActivity(intent);
+            }
+        });
+        profilo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProfiloActivity.class);
+                startActivity(intent);
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(context, Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+    public  void setAscoltatori(Context context, String comune){
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EventiAggiungiActivity.class);
+                intent.putExtra("comune", comune);
+                startActivity(intent);
+            }
+        });
     }
     private void getAlberghi(Activity a) {
         viewmodel = MainActivity.viewModel;
