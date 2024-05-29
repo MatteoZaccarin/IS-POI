@@ -48,6 +48,8 @@ public class SearchCity extends AppCompatActivity {
         getAlberghi(this);
         getAgriturismo(this);
         getSentieri(this);
+        getPisteScii(this);
+        //getPisteCiclabili(this);
         Intent intent = getIntent();
         if(intent != null) {
             String valoreRecuperato = intent.getStringExtra("comune");
@@ -56,8 +58,7 @@ public class SearchCity extends AppCompatActivity {
             setLeftMenu(this);
         }
     }
-        getPisteScii(this);
-        //getPisteCiclabili(this);
+
 
 
     private void setLeftMenu(Context context){
