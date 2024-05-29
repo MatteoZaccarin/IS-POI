@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent=new Intent(getApplicationContext(), SearchCity.class);
             intent.putExtra("comune",selected);
             startActivity(intent);
-            finish();
         });
 
         /*messo la lista dei POI nel menù a tendina*/

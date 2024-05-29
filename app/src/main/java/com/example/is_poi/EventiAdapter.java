@@ -27,7 +27,11 @@ public class EventiAdapter extends RecyclerView.Adapter<EventoViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull EventoViewHolder holder, int position) {
         holder.nomeEvento.setText(listaEventi.get(position).NomeEvento);
-        holder.Indirizzo.setText("Luogo: "+listaEventi.get(position).Indirizzo+" n "+listaEventi.get(position).Civico+" - "+listaEventi.get(position).Comune+" ("+listaEventi.get(position).Provincia+")");
+        if(listaEventi.get(position).Civico.isEmpty()){
+            holder.Indirizzo.setText("Luogo: "+listaEventi.get(position).Indirizzo+" - "+listaEventi.get(position).Comune);
+        }else{
+            holder.Indirizzo.setText("Luogo: "+listaEventi.get(position).Indirizzo+" n "+listaEventi.get(position).Civico +" - "+listaEventi.get(position).Comune);
+        }
         holder.Date.setText("Inizio: "+listaEventi.get(position).DataOraInizio+"\nFine: "+ listaEventi.get(position).DataOraFine);
         holder.Descrizione.setText(listaEventi.get(position).Descrizione);
         holder.Id.setText(listaEventi.get(position).id);
