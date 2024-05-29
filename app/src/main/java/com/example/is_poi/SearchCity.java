@@ -1,6 +1,7 @@
 package com.example.is_poi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,9 +19,9 @@ import com.example.is_poi.databinding.ActivitySearchCityBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class SearchCity extends AppCompatActivity {
-
     public static boolean areStringsEqualIgnoreCase(String str1, String str2) {
         // Converti entrambe le stringhe in minuscolo
         String normalizedStr1 = str1.toLowerCase();
@@ -44,10 +45,9 @@ public class SearchCity extends AppCompatActivity {
         getAlberghi(this);
         getAgriturismo(this);
         getSentieri(this);
-        Intent intent = getIntent();
-        if(intent != null) {
-            String valoreRecuperato = intent.getStringExtra("comune");
-        }
+        getPisteScii(this);
+        getPisteCiclabili(this);
+
 
     }
     private void getAlberghi(Activity a) {
@@ -59,18 +59,25 @@ public class SearchCity extends AppCompatActivity {
                 ArrayList<Alberghi> alberghi=new ArrayList<>();
                 Intent intent = getIntent();
                 String valoreRecuperato = intent.getStringExtra("comune");
-
+                int cont=0;
                 for(Alberghi a: alberghis){
                     if(a.TIPOLOGIA.compareTo("ALBERGO")==0){
                         if(areStringsEqualIgnoreCase(a.COMUNE,valoreRecuperato)){
                             Log.d("ciao",a.COMUNE);
                             a.icon=R.drawable.hotel;
                             alberghi.add(a);
+                            cont++;
                         }
 
                     }
                 }
                 RecyclerView RW =findViewById((R.id.recyclerAlberghi));
+                /*if(cont>=3){
+                    int heightInPx = (int) (500 * 2 + 0.5f);
+                    ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) RW.getLayoutParams();
+                    params.height = heightInPx; // Imposta l'altezza desiderata in pixel, ad esempio 100px
+                    RW.setLayoutParams(params);
+                }*/
                 RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
                 RW.setAdapter(new AlberghiAdapter(a, alberghi));
                 //findViewById(R.id.progressBar).setVisibility(View.GONE);
@@ -92,6 +99,7 @@ public class SearchCity extends AppCompatActivity {
                     if(a.TIPOLOGIA.compareTo("AGRITURISMO")==0){
                         if(areStringsEqualIgnoreCase(a.COMUNE,valoreRecuperato)){
                             Log.d("ciao",a.COMUNE);
+
                             a.icon=R.drawable.agri;
                             alberghi.add(a);
                         }
@@ -119,12 +127,69 @@ public class SearchCity extends AppCompatActivity {
                 for(SentieriPanoramici a: sentieris){
                     if(areStringsEqualIgnoreCase(a.PuntoDiPartenza,valoreRecuperato)){
                         Log.d("ciao",a.PuntoDiPartenza);
+                        a.image=R.drawable.sentiero;
                         sentieri.add(a);
                     }
                 }
                 RecyclerView RW =findViewById((R.id.recyclerSentieri));
                 RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
                 RW.setAdapter(new SentieriAdapter(a,sentieri ));
+                //findViewById(R.id.progressBar).setVisibility(View.GONE);
+            }
+        });
+
+    }
+    private void getPisteScii(Activity a) {
+        viewmodel = MainActivity.viewModel;
+        viewmodel.fetchPisteDaSci();
+        viewmodel.getMyEsperienze_PisteSci().observe(this, new Observer<ArrayList<Esperienze>>() {
+            @Override
+            public void onChanged(ArrayList<Esperienze> sentieris) {
+                ArrayList<Esperienze> sentieri=new ArrayList<>();
+                Intent intent = getIntent();
+                String valoreRecuperato = intent.getStringExtra("comune");
+
+                for(Esperienze a: sentieris){
+                    if((a.PuntoDiPartenza.contains(valoreRecuperato)) || a.Titolo.toUpperCase().contains(valoreRecuperato.toUpperCase())){
+                        Log.d("ciao",a.PuntoDiPartenza);
+                        a.image=R.drawable.sci;
+                        sentieri.add(a);
+                    }else{
+                        Log.d("xxx",a.Titolo.toUpperCase());
+                        Log.d("bbb",valoreRecuperato.toUpperCase());
+                    }
+                }
+                RecyclerView RW =findViewById((R.id.recyclerPisteScii));
+                RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
+                RW.setAdapter(new SciAdapter(a,sentieri ));
+                //findViewById(R.id.progressBar).setVisibility(View.GONE);
+            }
+        });
+
+    }
+    private void getPisteCiclabili(Activity a) {
+        viewmodel = MainActivity.viewModel;
+        viewmodel.fetchPisteCiclabili();
+        viewmodel.getMyPisteCiclabili().observe(this, new Observer<ArrayList<Esperienze>>() {
+            @Override
+            public void onChanged(ArrayList<Esperienze> sentieris) {
+                ArrayList<Esperienze> sentieri=new ArrayList<>();
+                Intent intent = getIntent();
+                String valoreRecuperato = intent.getStringExtra("comune");
+
+                for(Esperienze a: sentieris){
+                    if((a.PuntoDiPartenza.contains(valoreRecuperato)) || a.PuntoDiPartenza.toUpperCase().contains(valoreRecuperato.toUpperCase())){
+                        Log.d("ciao",a.PuntoDiPartenza);
+                        a.image=R.drawable.bici;
+                        sentieri.add(a);
+                    }else{
+                        Log.d("xxx",a.Titolo.toUpperCase());
+                        Log.d("bbb",valoreRecuperato.toUpperCase());
+                    }
+                }
+                RecyclerView RW =findViewById((R.id.recyclerPisteCiclabili));
+                RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
+                RW.setAdapter(new SciAdapter(a,sentieri ));
                 //findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });

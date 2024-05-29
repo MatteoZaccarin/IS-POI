@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:navigationIcon="@drawable/ic_menu"
-            android:title="Home"
+            android:title="Ricerca cittá"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,25 +34,96 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ALBERGHI"
+                    android:id="@+id/textAlberghi"
+                    android:textStyle="bold"
+                    android:textSize="24sp" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:id="@+id/recyclerAlberghi"
                     android:layout_height="300dp" />
+                <View
+                    android:id="@+id/primaLinea"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AGRITURISMI"
+                    android:id="@+id/textAgriturismi"
+                    android:textStyle="bold"
+                    android:textSize="24sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:id="@+id/recyclerAgriturismo"/>
 
+                <View
+                    android:id="@+id/secondaLinea"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="IMPIANTI SCIISTICI"
+                    android:id="@+id/textScii"
+                    android:textStyle="bold"
+                    android:textSize="24sp" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:id="@+id/recyclerPisteScii"/>
 
+                <View
+                    android:id="@+id/terzaLinea"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SENTIERI PANORAMICI"
+                    android:id="@+id/textSentieri"
+                    android:textStyle="bold"
+                    android:textSize="24sp" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:id="@+id/recyclerSentieri"/>
+
+                <View
+                    android:id="@+id/quartaLinea"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SENTIERI CICLABILI"
+                    android:id="@+id/textCiclabili"
+                    android:textStyle="bold"
+                    android:textSize="24sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"

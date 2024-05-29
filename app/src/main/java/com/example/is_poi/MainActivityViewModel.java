@@ -50,12 +50,19 @@ public class MainActivityViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Esperienze>> myMountainBike;
     public MutableLiveData<ArrayList<Esperienze>> myPisteCiclabili;
     public MutableLiveData<ArrayList<Evento>> myEventi;
-
+    public MutableLiveData<ArrayList<Evento>> AllEventi;
     public MutableLiveData<ArrayList<Evento>> getMyEventi(){
         if(myEventi==null){
             myEventi=new MutableLiveData<ArrayList<Evento>>();
         }
         return myEventi;
+    }
+
+    public MutableLiveData<ArrayList<Evento>> getAllEventi(){
+        if(AllEventi==null){
+            AllEventi=new MutableLiveData<ArrayList<Evento>>();
+        }
+        return AllEventi;
     }
 
     public MutableLiveData<ArrayList<Alberghi>> getMyStrutture(){
@@ -346,6 +353,27 @@ public class MainActivityViewModel extends ViewModel {
                     }
                 }
                 myEventi.setValue(eventi);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("errore interrogazione eventi firebase", error.getDetails());
+            }
+        });
+    }
+    public void fetchAllEventi() {
+        Query q = FirebaseDatabase.getInstance("https://is-poi-default-rtdb.europe-west1.firebasedatabase.app").getReference("eventi").orderByKey();
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Evento> eventi = new ArrayList<>();
+                // Itera su ogni risultato della query
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    Evento e = childSnapshot.getValue(Evento.class);
+                    e.id = childSnapshot.getKey();
+                    eventi.add(e);
+                }
+                AllEventi.setValue(eventi);
             }
 
             @Override
