@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -17,11 +18,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
 public class EventiAggiungiActivity extends AppCompatActivity {
     ActivityNeweventiBinding binding;
+    private MainActivityViewModel viewModel;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= ActivityNeweventiBinding.inflate(getLayoutInflater());
@@ -31,6 +34,8 @@ public class EventiAggiungiActivity extends AppCompatActivity {
         binding.comune.setText(comune);
         binding.orainizio.setText("12:00");
         binding.orafine.setText("12:00");
+        viewModel=MainActivity.viewModel;
+        initObservers();
         LocalDate a=LocalDate.now();
         binding.datainizio.setText(a.getDayOfMonth()+"-"+a.getMonthValue()+"-"+a.getYear());
         binding.datafine.setText(a.getDayOfMonth()+"-"+a.getMonthValue()+"-"+a.getYear());

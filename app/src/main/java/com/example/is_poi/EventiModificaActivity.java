@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -22,10 +23,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
 
 public class EventiModificaActivity extends AppCompatActivity {
     private ActivityNeweventiBinding binding;
+    private MainActivityViewModel viewModel;
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://is-poi-default-rtdb.europe-west1.firebasedatabase.app");
     DatabaseReference myRef = database.getReference("eventi");
     @Override
@@ -34,12 +40,14 @@ public class EventiModificaActivity extends AppCompatActivity {
         binding= ActivityNeweventiBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         String id=getIntent().getStringExtra("id");
+        viewModel=MainActivity.viewModel;
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        initObservers();
         binding.Invio.setText("Modifica");
         binding.toolbar.setTitle("Modifica Evento");
         setInfo(id);
@@ -67,6 +75,21 @@ public class EventiModificaActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 //fare alert di errore
                 Log.e("errore evento", "evento non presente o cancellato");
+            }
+        });
+    }
+    private void initObservers() {
+        viewModel.getUiState().observe(this, uiState -> {
+            if (uiState.comuni != null) {
+                // Update adapter
+                java.util.List<String> listaComuni=new ArrayList<>();
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        binding.getRoot().getContext(),
+                        android.R.layout.simple_dropdown_item_1line,
+                        uiState.ritornaStringheComuni()
+                );
+                binding.comune.setAdapter(adapter);
             }
         });
     }
