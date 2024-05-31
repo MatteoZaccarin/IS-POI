@@ -50,6 +50,7 @@ public class SearchCity extends AppCompatActivity {
         getSentieri(this);
         getPisteScii(this);
         //getPisteCiclabili(this);
+        getEventi(this);
         Intent intent = getIntent();
         if(intent != null) {
             String valoreRecuperato = intent.getStringExtra("comune");
@@ -221,7 +222,7 @@ public class SearchCity extends AppCompatActivity {
     private void getPisteCiclabili(Activity a) {
         viewmodel = MainActivity.viewModel;
         viewmodel.fetchPisteCiclabili();
-        viewmodel.getMyPisteCiclabili().observe(this, new Observer<ArrayList<Esperienze>>() {
+        viewmodel.getMyRoadBike().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> sentieris) {
                 ArrayList<Esperienze> sentieri=new ArrayList<>();
@@ -246,4 +247,31 @@ public class SearchCity extends AppCompatActivity {
         });
 
     }
+
+    private void getEventi(Activity a) {
+        viewmodel = MainActivity.viewModel;
+        viewmodel.fetchAllEventi();
+        viewmodel.getAllEventi().observe(this, new Observer<ArrayList<Evento>>() {
+            @Override
+            public void onChanged(ArrayList<Evento> sentieris) {
+                ArrayList<Evento> sentieri=new ArrayList<>();
+                Intent intent = getIntent();
+                String valoreRecuperato = intent.getStringExtra("comune");
+
+                for(Evento a: sentieris){
+                    if((a.Comune.contains(valoreRecuperato)) || a.Comune.toUpperCase().contains(valoreRecuperato.toUpperCase())){
+                        sentieri.add(a);
+                    }else{
+                        Log.d("bbb",valoreRecuperato.toUpperCase());
+                    }
+                }
+                RecyclerView RW =findViewById((R.id.recyclerEVENTI));
+                RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
+                RW.setAdapter(new EventiAdapter(a,sentieri ));
+                //findViewById(R.id.progressBar).setVisibility(View.GONE);
+            }
+        });
+
+    }
+
 }

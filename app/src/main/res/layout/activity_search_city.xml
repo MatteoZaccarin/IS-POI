@@ -140,6 +140,27 @@
                     android:layout_height="300dp"
                     android:id="@+id/recyclerPisteCiclabili"/>
 
+                <View
+                    android:id="@+id/quintaLinea"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="EVENTI"
+                    android:id="@+id/textEventi"
+                    android:textStyle="bold"
+                    android:textSize="24sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:id="@+id/recyclerEVENTI"/>
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
