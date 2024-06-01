@@ -56,9 +56,13 @@ public class EventiActivity extends AppCompatActivity {
         viewModel.getMyEventi().observe(this, new Observer<ArrayList<Evento>>() {
             @Override
             public void onChanged(ArrayList<Evento> eventi) {
-                RecyclerView RW =findViewById((R.id.recyclerview));
-                RW.setLayoutManager(new LinearLayoutManager(EventiActivity.this));
-                RW.setAdapter(new EventiAdapter(EventiActivity.this, eventi));
+                if(eventi.size()==0){
+                    binding.nocontent.setVisibility(View.VISIBLE);
+                }else{
+                    RecyclerView RW =findViewById((R.id.recyclerview));
+                    RW.setLayoutManager(new LinearLayoutManager(EventiActivity.this));
+                    RW.setAdapter(new EventiAdapter(EventiActivity.this, eventi));
+                }
                 findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });

@@ -108,6 +108,92 @@ public class MainActivityViewModel extends ViewModel {
     }
 
 
+    public void fetchOnlyRoadBike() {
+        if (myRoadBike == null) {
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+            ContentActivity.RequestRoadBike request = retrofit.create(ContentActivity.RequestRoadBike.class);
+
+            request.getRoadBike().enqueue(new Callback<ArrayList<Esperienze>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Esperienze>> call, Response<ArrayList<Esperienze>> response) {
+                    MainActivityViewModel.this.myRoadBike.setValue(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Esperienze>> call, Throwable t) {
+                    Log.e("error", "chiamata API roadbike");
+                }
+            });
+        }
+    }
+    public void fetchOnlyPisteCiclabili(){
+        if(myPisteCiclabili==null){
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+            ContentActivity.RequestPisteCiclabili request1 = retrofit.create(ContentActivity.RequestPisteCiclabili.class);
+            request1.getPisteCiclabili().enqueue(new Callback<ArrayList<Esperienze>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Esperienze>> call, Response<ArrayList<Esperienze>> response) {
+                    for(Esperienze esp: response.body()){
+                        esp.Categoria="Piste Ciclabili";
+                    }
+                    MainActivityViewModel.this.myPisteCiclabili.setValue(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Esperienze>> call, Throwable t) {
+                    Log.e("error", "chiamata API mountainbike");
+                }
+            });
+        }
+    }
+
+    public void fetchOnlyMountainBike(){
+        if(myMountainBike==null){
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+            ContentActivity.RequestMountainBike request1 = retrofit.create(ContentActivity.RequestMountainBike.class);
+            request1.getMountainBike().enqueue(new Callback<ArrayList<Esperienze>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Esperienze>> call, Response<ArrayList<Esperienze>> response) {
+                    MainActivityViewModel.this.myMountainBike.setValue(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Esperienze>> call, Throwable t) {
+                    Log.e("error", "chiamata API mountainbike");
+                }
+            });
+        }
+    }
 
     public void fetchMunicipallyData() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);

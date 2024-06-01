@@ -26,6 +26,7 @@ public class EventoViewHolder extends RecyclerView.ViewHolder {
     MainActivityViewModel viewModel;
     Button editButton;
     ImageButton deleteButton;
+    View secondoLinea;
     EventiAdapter adapter;
     public EventoViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
@@ -36,6 +37,7 @@ public class EventoViewHolder extends RecyclerView.ViewHolder {
         Id=itemView.findViewById(R.id.id);
         editButton=itemView.findViewById(R.id.modify);
         deleteButton=itemView.findViewById(R.id.cancel);
+        secondoLinea=itemView.findViewById(R.id.secondaLinea);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

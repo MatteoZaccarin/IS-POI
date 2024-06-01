@@ -55,6 +55,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:id="@+id/recyclerAlberghi"
+
                     android:layout_height="300dp" />
                 <View
                     android:id="@+id/primaLinea"
