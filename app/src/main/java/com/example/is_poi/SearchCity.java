@@ -243,7 +243,6 @@ public class SearchCity extends AppCompatActivity {
                 //findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });
-
     }
 
 
