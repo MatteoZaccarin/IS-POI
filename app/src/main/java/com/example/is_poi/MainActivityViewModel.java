@@ -108,6 +108,34 @@ public class MainActivityViewModel extends ViewModel {
     }
 
 
+    public void fetchOnlyRoadBike() {
+        if (myRoadBike == null) {
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            okhttp3.Response originalResponse = chain.proceed(chain.request());
+                            MediaType mediaType = MediaType.parse("application/json; charset=ISO-8859-1");
+                            ResponseBody modifiedBody = ResponseBody.create(mediaType, originalResponse.body().bytes());
+                            return originalResponse.newBuilder().body(modifiedBody).build();
+                        }
+                    });
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("https://dati.veneto.it").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+            ContentActivity.RequestRoadBike request = retrofit.create(ContentActivity.RequestRoadBike.class);
+
+            request.getRoadBike().enqueue(new Callback<ArrayList<Esperienze>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Esperienze>> call, Response<ArrayList<Esperienze>> response) {
+                    MainActivityViewModel.this.myRoadBike.setValue(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Esperienze>> call, Throwable t) {
+                    Log.e("error", "chiamata API roadbike");
+                }
+            });
+        }
+    }
 
     public void fetchMunicipallyData() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES);
