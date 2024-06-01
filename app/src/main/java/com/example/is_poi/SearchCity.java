@@ -239,11 +239,10 @@ public class SearchCity extends AppCompatActivity {
                 }
                 RecyclerView RW =findViewById((R.id.recyclerPisteCiclabili));
                 RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
-                RW.setAdapter(new SciAdapter(a,sentieri ));
+                RW.setAdapter(new CiclabiliMountainAdapter(a,sentieri ));
                 //findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });
-
     }
 
 
