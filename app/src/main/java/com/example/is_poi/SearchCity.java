@@ -304,7 +304,6 @@ public class SearchCity extends AppCompatActivity {
                 RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
                 RW.setAdapter(new EventiGeneralAdapter(a,sentieri ));
                 //findViewById(R.id.progressBar).setVisibility(View.GONE);
-                RW.setAdapter(new EventiAdapter(a,sentieri ));
                 if(sentieri.size()==0){
                     RW.setVisibility(View.GONE);
                     findViewById((R.id.textEventi)).setVisibility(View.GONE);
