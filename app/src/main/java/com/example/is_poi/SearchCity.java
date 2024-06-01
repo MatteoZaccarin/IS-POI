@@ -109,27 +109,25 @@ public class SearchCity extends AppCompatActivity {
                 ArrayList<Alberghi> alberghi=new ArrayList<>();
                 Intent intent = getIntent();
                 String valoreRecuperato = intent.getStringExtra("comune");
-                int cont=0;
                 for(Alberghi a: alberghis){
                     if(a.TIPOLOGIA.compareTo("ALBERGO")==0){
                         if(areStringsEqualIgnoreCase(a.COMUNE,valoreRecuperato)){
                             Log.d("ciao",a.COMUNE);
                             a.icon=R.drawable.hotel;
                             alberghi.add(a);
-                            cont++;
                         }
 
                     }
                 }
                 RecyclerView RW =findViewById((R.id.recyclerAlberghi));
-                /*if(cont>=3){
-                    int heightInPx = (int) (500 * 2 + 0.5f);
-                    ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) RW.getLayoutParams();
-                    params.height = heightInPx; // Imposta l'altezza desiderata in pixel, ad esempio 100px
-                    RW.setLayoutParams(params);
-                }*/
                 RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
                 RW.setAdapter(new AlberghiAdapter(a, alberghi));
+                if(alberghi.size()==0){
+                    RW.setVisibility(View.GONE);
+                    findViewById((R.id.textAlberghi)).setVisibility(View.GONE);
+                    findViewById((R.id.primaLinea)).setVisibility(View.GONE);
+                }
+
                 //findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         });
@@ -144,12 +142,11 @@ public class SearchCity extends AppCompatActivity {
                 ArrayList<Alberghi> alberghi=new ArrayList<>();
                 Intent intent = getIntent();
                 String valoreRecuperato = intent.getStringExtra("comune");
-
+                int cont=0;
                 for(Alberghi a: alberghis){
                     if(a.TIPOLOGIA.compareTo("AGRITURISMO")==0){
                         if(areStringsEqualIgnoreCase(a.COMUNE,valoreRecuperato)){
                             Log.d("ciao",a.COMUNE);
-
                             a.icon=R.drawable.agri;
                             alberghi.add(a);
                         }
@@ -159,7 +156,12 @@ public class SearchCity extends AppCompatActivity {
                 RecyclerView RW =findViewById((R.id.recyclerAgriturismo));
                 RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
                 RW.setAdapter(new AlberghiAdapter(a, alberghi));
-                //findViewById(R.id.progressBar).setVisibility(View.GONE);
+                if(alberghi.size()==0){
+                    RW.setVisibility(View.GONE);
+                    findViewById((R.id.textAgriturismi)).setVisibility(View.GONE);
+                    findViewById((R.id.secondaLinea)).setVisibility(View.GONE);
+                }
+
             }
         });
 
@@ -184,7 +186,11 @@ public class SearchCity extends AppCompatActivity {
                 RecyclerView RW =findViewById((R.id.recyclerSentieri));
                 RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
                 RW.setAdapter(new SentieriAdapter(a,sentieri ));
-                //findViewById(R.id.progressBar).setVisibility(View.GONE);
+                if(sentieri.size()==0){
+                    RW.setVisibility(View.GONE);
+                    findViewById((R.id.textSentieri)).setVisibility(View.GONE);
+                    findViewById((R.id.terzaLinea)).setVisibility(View.GONE);
+                }
             }
         });
 
@@ -212,7 +218,11 @@ public class SearchCity extends AppCompatActivity {
                 RecyclerView RW =findViewById((R.id.recyclerPisteScii));
                 RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
                 RW.setAdapter(new SciAdapter(a,sentieri ));
-                //findViewById(R.id.progressBar).setVisibility(View.GONE);
+                if(sentieri.size()==0){
+                    RW.setVisibility(View.GONE);
+                    findViewById((R.id.textScii)).setVisibility(View.GONE);
+                    findViewById((R.id.quartaLinea)).setVisibility(View.GONE);
+                }
             }
         });
 
@@ -220,6 +230,9 @@ public class SearchCity extends AppCompatActivity {
     private void getPisteCiclabili(Activity a) {
         viewmodel = MainActivity.viewModel;
         viewmodel.fetchOnlyRoadBike();
+
+        viewmodel.fetchOnlyPisteCiclabili();
+
         viewmodel.getMyRoadBike().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> sentieris) {
@@ -237,10 +250,34 @@ public class SearchCity extends AppCompatActivity {
                         Log.d("bbb",valoreRecuperato.toUpperCase());
                     }
                 }
-                RecyclerView RW =findViewById((R.id.recyclerPisteCiclabili));
-                RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
-                RW.setAdapter(new CiclabiliMountainAdapter(a,sentieri ));
-                //findViewById(R.id.progressBar).setVisibility(View.GONE);
+                viewmodel.getMyPisteCiclabili().observe(SearchCity.this, new Observer<ArrayList<Esperienze>>() {
+                    @Override
+                    public void onChanged(ArrayList<Esperienze> sentieris) {
+                        Intent intent = getIntent();
+                        String valoreRecuperato = intent.getStringExtra("comune");
+
+                        for(Esperienze a: sentieris){
+                            if((a.PuntoDiPartenza.contains(valoreRecuperato)) || a.PuntoDiPartenza.toUpperCase().contains(valoreRecuperato.toUpperCase())){
+                                Log.d("ciao",a.PuntoDiPartenza);
+                                a.image=R.drawable.bici;
+                                sentieri.add(a);
+                            }else{
+                                Log.d("xxx",a.Titolo.toUpperCase());
+                                Log.d("bbb",valoreRecuperato.toUpperCase());
+                            }
+                        }
+
+                        RecyclerView RW =findViewById((R.id.recyclerPisteCiclabili));
+                        RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
+                        RW.setAdapter(new CiclabiliMountainAdapter(a,sentieri ));
+                        if(sentieri.size()==0){
+                            RW.setVisibility(View.GONE);
+                            findViewById((R.id.textCiclabili)).setVisibility(View.GONE);
+                            findViewById((R.id.quintaLinea)).setVisibility(View.GONE);
+                        }
+
+                    }
+                });
             }
         });
     }
@@ -266,7 +303,10 @@ public class SearchCity extends AppCompatActivity {
                 RecyclerView RW =findViewById((R.id.recyclerEVENTI));
                 RW.setLayoutManager(new LinearLayoutManager(SearchCity.this));
                 RW.setAdapter(new EventiAdapter(a,sentieri ));
-                //findViewById(R.id.progressBar).setVisibility(View.GONE);
+                if(sentieri.size()==0){
+                    RW.setVisibility(View.GONE);
+                    findViewById((R.id.textEventi)).setVisibility(View.GONE);
+                }
             }
         });
 
