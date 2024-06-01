@@ -53,7 +53,7 @@ public class EventoViewHolder extends RecyclerView.ViewHolder {
                 //cancella evento
                 AlertDialog.Builder builder=new AlertDialog.Builder(context);
                 builder.setTitle("Cancellare "+nomeEvento.getText().toString()+"?");
-                builder.setMessage("Sei sicuro di volevr cancellare questo evento?");
+                builder.setMessage("Sei sicuro di voler cancellare questo evento?");
                 builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
