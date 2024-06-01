@@ -49,7 +49,7 @@ public class SearchCity extends AppCompatActivity {
         getAgriturismo(this);
         getSentieri(this);
         getPisteScii(this);
-        //getPisteCiclabili(this);
+        getPisteCiclabili(this);
         getEventi(this);
         Intent intent = getIntent();
         if(intent != null) {
@@ -59,8 +59,6 @@ public class SearchCity extends AppCompatActivity {
             setLeftMenu(this);
         }
     }
-
-
 
     private void setLeftMenu(Context context){
         TextView eventi=findViewById(R.id.eventi);
@@ -221,7 +219,7 @@ public class SearchCity extends AppCompatActivity {
     }
     private void getPisteCiclabili(Activity a) {
         viewmodel = MainActivity.viewModel;
-        viewmodel.fetchPisteCiclabili();
+        viewmodel.fetchOnlyRoadBike();
         viewmodel.getMyRoadBike().observe(this, new Observer<ArrayList<Esperienze>>() {
             @Override
             public void onChanged(ArrayList<Esperienze> sentieris) {
@@ -247,6 +245,7 @@ public class SearchCity extends AppCompatActivity {
         });
 
     }
+
 
     private void getEventi(Activity a) {
         viewmodel = MainActivity.viewModel;

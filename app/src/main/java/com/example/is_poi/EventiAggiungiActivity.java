@@ -50,6 +50,22 @@ public class EventiAggiungiActivity extends AppCompatActivity {
 
     }
 
+    private void initObservers() {
+        viewModel.getUiState().observe(this, uiState -> {
+            if (uiState.comuni != null) {
+                // Update adapter
+                java.util.List<String> listaComuni = new ArrayList<>();
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        binding.getRoot().getContext(),
+                        android.R.layout.simple_dropdown_item_1line,
+                        uiState.ritornaStringheComuni()
+                );
+                binding.comune.setAdapter(adapter);
+            }
+        });
+    }
+
     public void setAscoltatori(){
         binding.datainizio.setOnClickListener(new View.OnClickListener() {
             @Override
