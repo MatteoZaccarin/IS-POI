@@ -19,6 +19,9 @@ import com.example.is_poi.databinding.ActivityEventiBinding;
 import com.example.is_poi.databinding.ActivitySearchCityBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -189,7 +192,7 @@ public class SearchCity extends AppCompatActivity {
                 if(sentieri.size()==0){
                     RW.setVisibility(View.GONE);
                     findViewById((R.id.textSentieri)).setVisibility(View.GONE);
-                    findViewById((R.id.terzaLinea)).setVisibility(View.GONE);
+                    findViewById((R.id.quartaLinea)).setVisibility(View.GONE);
                 }
             }
         });
@@ -221,7 +224,7 @@ public class SearchCity extends AppCompatActivity {
                 if(sentieri.size()==0){
                     RW.setVisibility(View.GONE);
                     findViewById((R.id.textScii)).setVisibility(View.GONE);
-                    findViewById((R.id.quartaLinea)).setVisibility(View.GONE);
+                    findViewById((R.id.terzaLinea)).setVisibility(View.GONE);
                 }
             }
         });
@@ -294,8 +297,11 @@ public class SearchCity extends AppCompatActivity {
                 String valoreRecuperato = intent.getStringExtra("comune");
 
                 for(Evento a: sentieris){
-                    if((a.Comune.contains(valoreRecuperato)) || a.Comune.toUpperCase().contains(valoreRecuperato.toUpperCase())){
-                        sentieri.add(a);
+                    if((a.Comune.contains(valoreRecuperato)) || a.Comune.toUpperCase().contains(valoreRecuperato.toUpperCase()) ){
+                        String data=a.getDataOraInizio().split(" ")[0];
+                        int result = CompareDate.compareDateWithCurrentDate(data);
+                        if(result>=0)
+                            sentieri.add(a);
                     }else{
                         Log.d("bbb",valoreRecuperato.toUpperCase());
                     }
@@ -313,5 +319,10 @@ public class SearchCity extends AppCompatActivity {
         });
 
     }
+
+
+
+
+
 
 }
